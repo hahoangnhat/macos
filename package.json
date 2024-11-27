@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "yarn prettier . --write"
+    "format": "yarn prettier . --write",
+    "prepare": "husky"
   },
   "dependencies": {
     "next": "15.0.3",
@@ -20,10 +21,19 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
     "postcss": "^8",
     "prettier": "3.4.1",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,mdx}": [
+      "yarn lint",
+      "yarn format",
+      "git add ."
+    ]
   }
 }
