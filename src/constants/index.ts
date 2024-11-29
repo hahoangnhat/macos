@@ -1,1 +1,1 @@
-// Init constants
+export * from './locales'
