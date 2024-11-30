@@ -1,0 +1,14 @@
+{
+  "languages": [
+    {
+      "value": "en",
+      "name": "English",
+      "supported": true
+    },
+    {
+      "value": "vi",
+      "name": "Tiếng Việt",
+      "supported": true
+    }
+  ]
+}
