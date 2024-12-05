@@ -1,1 +1,1 @@
-// Init components
+export * from './Icons'
