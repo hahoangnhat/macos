@@ -1,5 +1,5 @@
 import { getCurrentDateTime } from '@/utils'
-import { AppleIcon, SearchIcon, SwitchIcon, WifiIcon } from '../Icons'
+import { AppleIcon, BatteryIcon, SearchIcon, SwitchIcon, WifiIcon } from '../Icons'
 import { useLocale } from 'next-intl'
 import { ELocale } from '@/constants'
 
@@ -24,6 +24,7 @@ const Header = ({ appName, utils }: IHeaderProps) => {
       </div>
 
       <div className="flex items-center gap-5 text-sm">
+        <BatteryIcon className="h-5 w-5" />
         <WifiIcon className="h-4 w-4" />
         <SearchIcon className="h-5 w-5" />
         <SwitchIcon className="h-5 w-5" />
