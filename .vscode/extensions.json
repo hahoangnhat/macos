@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "PKief.material-icon-theme",
+    "vscodevim.vim",
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss",
+    "usernamehw.errorlens",
+    "formulahendry.auto-rename-tag",
+    "esbenp.prettier-vscode"
+  ]
+}
