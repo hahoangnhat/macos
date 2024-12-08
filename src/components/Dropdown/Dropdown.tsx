@@ -33,15 +33,18 @@ const Dropdown = ({
   const dropdownClassname = classNames(
     'w-max-content absolute top-full translate-y-0.5',
     'flex flex-col gap-1 rounded-md bg-alabaster-50 bg-opacity-90 p-2 text-black',
-    {
-      hidden: !active || activeItem !== id,
-    },
   )
 
   const handleToggle = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation()
-    setActive((prev) => !prev)
-    setActiveItem(active ? -1 : id)
+
+    if (activeItem === id) {
+      setActive(false)
+      setActiveItem(-1)
+    } else {
+      setActive(true)
+      setActiveItem(id)
+    }
   }
 
   return (
@@ -56,13 +59,15 @@ const Dropdown = ({
       </div>
 
       {/* Dropdown */}
-      <div className={dropdownClassname}>
-        {options.map((option: IDropdownOptionProps) => (
-          <span key={option.id} className="text-nowrap">
-            {option.label}
-          </span>
-        ))}
-      </div>
+      {active && activeItem === id && (
+        <div className={dropdownClassname}>
+          {options.map((option: IDropdownOptionProps) => (
+            <span key={option.id} className="text-nowrap">
+              {option.label}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
