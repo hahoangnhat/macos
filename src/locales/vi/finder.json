@@ -1,0 +1,13 @@
+{
+  "header": {
+    "app_name": "Finder",
+    "utils": {
+      "file": "Tệp",
+      "edit": "Biên tập",
+      "view": "Cảnh",
+      "go": "Đi",
+      "window": "Cửa sổ",
+      "help": "Trợ giúp"
+    }
+  }
+}

@@ -1,34 +1,71 @@
+'use client'
 import { getCurrentDateTime } from '@/utils'
 import { AppleIcon, BatteryIcon, SearchIcon, SwitchIcon, WifiIcon } from '../Icons'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { ELocale } from '@/constants'
 import { Dropdown } from '../Dropdown'
+import { useState } from 'react'
+import { IDropdownOptionProps } from '@/interfaces'
+import classNames from 'classnames'
 
 interface IHeaderProps {
-  appName: string
-  utils: string[]
+  utils: IDropdownOptionProps[]
 }
 
-const Header = ({ appName, utils }: IHeaderProps) => {
+const Header = ({ utils }: IHeaderProps) => {
+  const t = useTranslations()
   const locale = useLocale()
 
+  const macosOptions: IDropdownOptionProps[] = [
+    {
+      id: 1,
+      label: t('macos.dropdown.about'),
+    },
+    {
+      id: 2,
+      label: t('macos.dropdown.system_settings'),
+    },
+  ]
+
+  const [active, setActive] = useState<boolean>(false)
+  const [activeItem, setActiveItem] = useState<number>(-1)
+
   return (
-    <header className="flex justify-between bg-alabaster-50 bg-opacity-20 px-5 py-1 text-white">
-      <div className="flex items-center gap-5 text-sm">
-        <Dropdown button={<AppleIcon className="h-4 w-4 text-white" />} options={['About']} />
+    <header className="flex justify-between bg-alabaster-50 bg-opacity-20 px-1 text-sm text-white">
+      <div className="flex items-center text-sm">
+        <Dropdown
+          id={0}
+          button={<AppleIcon className="h-4 w-4" />}
+          options={macosOptions}
+          active={active}
+          setActive={setActive}
+          activeItem={activeItem}
+          setActiveItem={setActiveItem}
+        />
 
         {/* Application utils */}
-        <span className="font-semibold">{appName}</span>
-        {utils.map((util: string, index: number) => (
-          <span key={index}>{util}</span>
+        {utils.map((util: IDropdownOptionProps, index: number) => (
+          <Dropdown
+            id={index + 1}
+            key={util.id}
+            button={<span>{util.label}</span>}
+            options={macosOptions}
+            active={active}
+            setActive={setActive}
+            activeItem={activeItem}
+            setActiveItem={setActiveItem}
+            className={classNames({
+              'font-semibold': util.isAppName,
+            })}
+          />
         ))}
       </div>
 
-      <div className="flex items-center gap-5 text-sm">
-        <BatteryIcon className="h-5 w-5 text-white" />
-        <WifiIcon className="h-4 w-4 text-white" />
-        <SearchIcon className="h-5 w-5 text-white" />
-        <SwitchIcon className="h-5 w-5 text-white" />
+      <div className="flex items-center gap-5">
+        <BatteryIcon className="h-5 w-5" />
+        <WifiIcon className="h-4 w-4" />
+        <SearchIcon className="h-5 w-5" />
+        <SwitchIcon className="h-5 w-5" />
         <span>{getCurrentDateTime(locale as ELocale)}</span>
       </div>
     </header>
