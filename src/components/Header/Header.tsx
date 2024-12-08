@@ -13,7 +13,7 @@ const Header = ({ appName, utils }: IHeaderProps) => {
   const locale = useLocale()
 
   return (
-    <header className="flex justify-between bg-hint-of-red-50 bg-opacity-20 px-5 py-1 text-white">
+    <header className="flex justify-between bg-alabaster-50 bg-opacity-20 px-5 py-1 text-white">
       <div className="flex items-center gap-5 text-sm">
         <Dropdown button={<AppleIcon className="h-4 w-4 text-white" />} options={['About']} />
 
