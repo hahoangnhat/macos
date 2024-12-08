@@ -31,8 +31,8 @@ const Header = ({ utils }: IHeaderProps) => {
   const [activeItem, setActiveItem] = useState<number>(-1)
 
   return (
-    <header className="flex justify-between bg-alabaster-50 bg-opacity-20 px-1 text-sm text-white">
-      <div className="flex items-center text-sm">
+    <header className="relative flex justify-between bg-alabaster-50 bg-opacity-20 px-1 text-sm text-white">
+      <div className="z-10 flex items-center text-sm">
         <Dropdown
           id={0}
           button={<AppleIcon className="h-4 w-4" />}
@@ -68,6 +68,16 @@ const Header = ({ utils }: IHeaderProps) => {
         <SwitchIcon className="h-5 w-5" />
         <span>{getCurrentDateTime(locale as ELocale)}</span>
       </div>
+
+      {active && (
+        <div
+          className="absolute left-0 top-0 h-screen w-screen bg-transparent"
+          onClick={() => {
+            setActive(false)
+            setActiveItem(-1)
+          }}
+        ></div>
+      )}
     </header>
   )
 }
