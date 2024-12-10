@@ -20,6 +20,7 @@ const Header = ({ utils }: IHeaderProps) => {
     {
       id: 1,
       label: t('macos.dropdown.about'),
+      className: 'border-b border-alabaster-400 pb-1',
     },
     {
       id: 2,

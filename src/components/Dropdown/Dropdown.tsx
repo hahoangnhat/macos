@@ -31,8 +31,8 @@ const Dropdown = ({
   })
 
   const dropdownClassname = classNames(
-    'w-max-content absolute top-full translate-y-0.5',
-    'flex flex-col gap-1 rounded-md bg-alabaster-50 bg-opacity-90 p-2 text-black',
+    'w-max-content absolute top-full translate-y-0.5 text-xs',
+    'flex flex-col gap-1 rounded-md bg-alabaster-50 bg-opacity-55 px-3 py-2 text-black backdrop-blur-xl',
   )
 
   const handleToggle = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -62,7 +62,7 @@ const Dropdown = ({
       {active && activeItem === id && (
         <div className={dropdownClassname}>
           {options.map((option: IDropdownOptionProps) => (
-            <span key={option.id} className="text-nowrap">
+            <span key={option.id} className={classNames('text-nowrap', option.className)}>
               {option.label}
             </span>
           ))}
