@@ -39,18 +39,34 @@ const reorderKeys = (sourceContent: any, targetContent: any) => {
 const translateDeeply = async (sourceContent: any, targetContent: any, toLanguage: string) => {
   await Promise.all(
     Object.keys(sourceContent).map(async (key: string) => {
-      const { translation } = (await translate(
-        sourceContent[key],
-        null,
-        toLanguage,
-      )) as TranslationResult
+      // Check updated key
+      let updatedTranslation = ''
+      if (typeof sourceContent[key] === 'string') {
+        const { translation } = (await translate(
+          sourceContent[key],
+          null,
+          toLanguage,
+        )) as TranslationResult
+        updatedTranslation = translation
+      }
 
-      if (targetContent?.[key] === undefined || targetContent?.[key] !== translation) {
+      if (
+        targetContent?.[key] === undefined ||
+        (updatedTranslation && targetContent?.[key] !== updatedTranslation)
+      ) {
         if (typeof sourceContent[key] === 'object') {
           targetContent[key] = {}
           await translateDeeply(sourceContent[key], targetContent[key], toLanguage)
         } else {
-          targetContent[key] = translation
+          const { translation } = (await translate(
+            sourceContent[key],
+            null,
+            toLanguage,
+          )) as TranslationResult
+
+          if (targetContent?.[key] !== translation) {
+            targetContent[key] = translation
+          }
         }
       } else if (typeof sourceContent[key] === 'object') {
         targetContent[key] = targetContent?.[key] || {}

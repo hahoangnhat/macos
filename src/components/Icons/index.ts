@@ -1,1 +1,5 @@
-export { default as AppleIcon } from './AppleIcon'
+export { ReactComponent as AppleIcon } from '@/assets/icons/apple-icon.svg'
+export { ReactComponent as SearchIcon } from '@/assets/icons/search-icon.svg'
+export { ReactComponent as WifiIcon } from '@/assets/icons/wifi-icon.svg'
+export { ReactComponent as SwitchIcon } from '@/assets/icons/switch-icon.svg'
+export { ReactComponent as BatteryIcon } from '@/assets/icons/battery-icon.svg'
