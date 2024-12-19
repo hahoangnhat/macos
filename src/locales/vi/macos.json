@@ -1,0 +1,14 @@
+{
+  "dropdown": {
+    "about": "Giới thiệu về máy Mac này",
+    "system_settings": "Cài đặt hệ thống...",
+    "app_store": "Cửa hàng ứng dụng",
+    "recent_items": "Các mục gần đây",
+    "force_quit": "Buộc thoát...",
+    "sleep": "Ngủ",
+    "restart": "Khởi động lại...",
+    "shutdown": "Dừng lại...",
+    "lock_screen": "Màn hình khóa",
+    "log_out": "Đăng xuất {{full_name}}"
+  }
+}
