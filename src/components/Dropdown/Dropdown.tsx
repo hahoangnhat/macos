@@ -5,13 +5,13 @@ import classNames from 'classnames'
 import { Dispatch, Fragment, ReactNode, SetStateAction } from 'react'
 
 interface IDropdownProps {
-  id: number
+  id: string
   label: ReactNode
   items: IDropdownItem[]
   isMenuActive: boolean
   setMenuActive: Dispatch<SetStateAction<boolean>>
-  activeItem: number
-  setActiveItem: Dispatch<SetStateAction<number>>
+  activeItem: string
+  setActiveItem: Dispatch<SetStateAction<string>>
   className?: string
 }
 
@@ -25,14 +25,18 @@ const Dropdown = ({
   setActiveItem,
   className,
 }: IDropdownProps) => {
-  const buttonClassname = classNames('h-full cursor-pointer rounded px-3 py-1', className, {
-    'hover:bg-alabaster-100 hover:bg-opacity-30': isMenuActive,
-    'bg-alabaster-100 bg-opacity-30': isMenuActive && activeItem === id,
-  })
+  const buttonClassname = classNames(
+    'h-full cursor-pointer rounded px-3 py-1 select-none',
+    {
+      'hover:bg-alabaster-100 hover:bg-opacity-30': isMenuActive,
+      'bg-alabaster-100 bg-opacity-30': isMenuActive && activeItem === id,
+    },
+    className,
+  )
 
   const dropdownClassname = classNames(
-    'w-max-content min-w-60 absolute top-full translate-y-0.5 text-xs',
-    'flex flex-col rounded-md bg-alabaster-50 bg-opacity-55 p-1 text-black backdrop-blur-xl',
+    'w-max-content min-w-60 absolute top-full translate-y-0.5 text-xs select-none z-50',
+    'flex flex-col rounded-md bg-alabaster-50 bg-opacity-55 p-1 text-black backdrop-blur-2xl',
   )
 
   const handleToggle = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -40,7 +44,7 @@ const Dropdown = ({
 
     if (activeItem === id) {
       setMenuActive(false)
-      setActiveItem(-1)
+      setActiveItem('')
     } else {
       setMenuActive(true)
       setActiveItem(id)
