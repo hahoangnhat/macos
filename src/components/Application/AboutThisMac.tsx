@@ -14,14 +14,14 @@ const AboutThisMac = () => {
   const t = useTranslations()
   const dispatch = useAppDispatch()
   const { name: appName } = useAppSelector((state) => state.application)
-  const finderRef = useRef<HTMLDivElement>(null)
+  const aboutThisMacRef = useRef<HTMLDivElement>(null)
 
   return (
-    <Draggable nodeRef={finderRef} bounds="parent">
+    <Draggable nodeRef={aboutThisMacRef} bounds="parent">
       <div
-        ref={finderRef}
+        ref={aboutThisMacRef}
         className={classNames(
-          'flex w-fit flex-col gap-4 rounded-md bg-alabaster-50 bg-opacity-55 p-4 backdrop-blur-2xl',
+          'flex w-fit flex-col gap-4 rounded-xl bg-alabaster-50 bg-opacity-55 p-4 backdrop-blur-2xl',
           {
             hidden: appName !== EApplication.ABOUT_THIS_MAC,
           },
