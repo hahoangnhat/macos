@@ -17,7 +17,7 @@ const AboutThisMac = () => {
   const aboutThisMacRef = useRef<HTMLDivElement>(null)
 
   return (
-    <Draggable nodeRef={aboutThisMacRef} bounds="parent">
+    <Draggable nodeRef={aboutThisMacRef} bounds="parent" cancel=".cancel-draggable">
       <div
         ref={aboutThisMacRef}
         className={classNames(
@@ -40,10 +40,10 @@ const AboutThisMac = () => {
             <div className="text-end">{t('about_this_mac.label.mac_os')}</div>
             <div>{t('about_this_mac.label.sequoia_15_1_1')}</div>
           </div>
-          <div className="mb-4 cursor-pointer rounded-md bg-alabaster-400 bg-opacity-70 px-2 py-1 text-xs hover:bg-alabaster-300">
+          <div className="cancel-draggable mb-4 cursor-pointer rounded-md bg-alabaster-400 bg-opacity-70 px-2 py-1 text-xs hover:bg-alabaster-300">
             {t('about_this_mac.button.more_info')}
           </div>
-          <div className="cursor-pointer text-[10px] text-alabaster-500 underline hover:opacity-60">
+          <div className="cancel-draggable cursor-pointer text-[10px] text-alabaster-500 underline hover:opacity-60">
             {t('about_this_mac.label.regulatory_certification')}
           </div>
           <div className="text-[10px] text-alabaster-500">

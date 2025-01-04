@@ -8,7 +8,7 @@ interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input = ({ showStartIcon, showEndIcon, className, ...props }: IInputProps) => {
   return (
-    <div className="relative flex">
+    <div className="cancel-draggable relative flex">
       {showStartIcon && (
         <div className="absolute left-0 top-0 translate-x-1/3 translate-y-1/3">{showStartIcon}</div>
       )}

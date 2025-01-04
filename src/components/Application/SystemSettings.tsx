@@ -16,7 +16,7 @@ const SystemSettings = () => {
   const settingsRef = useRef<HTMLDivElement>(null)
 
   return (
-    <Draggable nodeRef={settingsRef} bounds="parent" cancel="input">
+    <Draggable nodeRef={settingsRef} bounds="parent" cancel=".cancel-draggable">
       <div
         ref={settingsRef}
         className={classNames('flex w-fit', {
