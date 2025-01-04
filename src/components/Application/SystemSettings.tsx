@@ -7,6 +7,7 @@ import Draggable from 'react-draggable'
 import { WindowUtil } from '../Util'
 import { setName as setAppName } from '@/stores/applications/slice'
 import { Input } from '../Input'
+import { CircleX, Search } from 'lucide-react'
 
 const SystemSettings = () => {
   const dispatch = useAppDispatch()
@@ -24,7 +25,14 @@ const SystemSettings = () => {
       >
         <div className="rounded-es-xl rounded-ss-xl bg-alabaster-200 px-2">
           <WindowUtil onClose={() => dispatch(setAppName(''))} className="p-2 pb-5 pt-4" />
-          <Input />
+          <Input
+            showStartIcon={<Search className="h-4 w-4" />}
+            showEndIcon={
+              <div className="h-4 w-4 p-px">
+                <CircleX className="h-full w-full" />
+              </div>
+            }
+          />
         </div>
         <div className="rounded-ee-xl rounded-se-xl bg-alabaster-100 p-4">hello</div>
       </div>
