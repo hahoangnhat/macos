@@ -1,5 +1,5 @@
 const ROUTES = {
-  FINDER: '/finder',
+  HOME: '/home',
 }
 
 export { ROUTES }

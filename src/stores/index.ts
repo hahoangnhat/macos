@@ -1,10 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit'
-import counterReducer from './counters/slice'
+import applicationReducer from './applications/slice'
 
 const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    application: applicationReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['application/setUtils'],
+        ignoredPaths: ['application.utils'],
+      },
+    }),
 })
 
 const makeStore = () => store

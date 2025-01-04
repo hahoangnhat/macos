@@ -1,3 +1,5 @@
 {
-  "hello": "Xin chào"
+  "label": {
+    "search": "Tìm kiếm"
+  }
 }

@@ -16,6 +16,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
       macos: (await import(`@/locales/${locale}/macos.json`)).default,
       finder: (await import(`@/locales/${locale}/finder.json`)).default,
       error: (await import(`@/locales/${locale}/error.json`)).default,
+      about_this_mac: (await import(`@/locales/${locale}/about-this-mac.json`)).default,
     },
   }
 })

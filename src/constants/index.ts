@@ -1,3 +1,4 @@
 export * from './locales'
 export * from './routes'
-export * from './dropdown'
+export * from './dropdowns'
+export * from './applications'

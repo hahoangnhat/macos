@@ -9,6 +9,6 @@
     "restart": "Khởi động lại...",
     "shutdown": "Dừng lại...",
     "lock_screen": "Màn hình khóa",
-    "log_out": "Đăng xuất {{full_name}}"
+    "log_out": "Đăng xuất {full_name}"
   }
 }
