@@ -1,17 +1,11 @@
 'use client'
-import { AppleIcon } from '@/components'
-import { useAppSelector } from '@/stores/hooks'
-import { useTranslations } from 'next-intl'
+
+import { AboutThisMac } from '@/components'
 
 const Home = () => {
-  const t = useTranslations()
-  const count = useAppSelector((state) => state.counter.value)
-
   return (
-    <div>
-      <h1>{t('common.hello')}</h1>
-      <AppleIcon />
-      {count}
+    <div className="relative h-full w-full">
+      <AboutThisMac />
     </div>
   )
 }

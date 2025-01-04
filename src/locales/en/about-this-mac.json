@@ -1,0 +1,17 @@
+{
+  "label": {
+    "mac_mini": "Mac mini",
+    "m1_2020": "M1, 2020",
+    "chip": "Chip",
+    "apple_m1": "Apple M1",
+    "memory": "Memory",
+    "8gb": "8 GB",
+    "mac_os": "macOS",
+    "sequoia_15_1_1": "Sequoia 15.1.1",
+    "all_rights_reserved": "All Rights Reserved.",
+    "regulatory_certification": "Regulatory Certification"
+  },
+  "button": {
+    "more_info": "More Info..."
+  }
+}

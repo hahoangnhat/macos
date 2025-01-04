@@ -1,3 +1,5 @@
 {
-  "hello": "Hello"
+  "label": {
+    "search": "Search"
+  }
 }

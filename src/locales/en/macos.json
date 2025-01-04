@@ -1,0 +1,14 @@
+{
+  "dropdown": {
+    "about": "About This Mac",
+    "system_settings": "System Settings...",
+    "app_store": "App Store",
+    "recent_items": "Recent Items",
+    "force_quit": "Force Quit...",
+    "sleep": "Sleep",
+    "restart": "Restart...",
+    "shutdown": "Shut Down...",
+    "lock_screen": "Lock Screen",
+    "log_out": "Log Out {full_name}..."
+  }
+}
