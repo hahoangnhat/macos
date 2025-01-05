@@ -1,0 +1,14 @@
+{
+  "label": {
+    "wifi": "Wi-Fi",
+    "bluetooth": "Bluetooth",
+    "network": "Network",
+    "energy": "Energy",
+    "general": "General",
+    "accessibility": "Accessibility",
+    "appearance": "Appearance",
+    "control_center": "Control Center",
+    "desktop_and_dock": "Desktop & Dock",
+    "displays": "Displays"
+  }
+}
