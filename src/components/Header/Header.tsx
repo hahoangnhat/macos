@@ -25,6 +25,12 @@ const Header = ({ utils }: IHeaderProps) => {
   const [isMenuActive, setMenuActive] = useState<boolean>(false)
   const [activeItem, setActiveItem] = useState<string>('')
 
+  const handleOpenApp = (appName: EApplication) => {
+    dispatch(setAppName(appName))
+    setMenuActive(false)
+    setActiveItem('')
+  }
+
   const macosItems = (t: TTFunction): IDropdownItem[] => [
     {
       id: uuidv4(),
@@ -32,17 +38,18 @@ const Header = ({ utils }: IHeaderProps) => {
         <DropdownButtonItem
           label={t('macos.dropdown.about')}
           hasDivider
-          onClick={() => {
-            dispatch(setAppName(EApplication.ABOUT_THIS_MAC))
-            setMenuActive(false)
-            setActiveItem('')
-          }}
+          onClick={() => handleOpenApp(EApplication.ABOUT_THIS_MAC)}
         />
       ),
     },
     {
       id: uuidv4(),
-      item: <DropdownButtonItem label={t('macos.dropdown.system_settings')} />,
+      item: (
+        <DropdownButtonItem
+          label={t('macos.dropdown.system_settings')}
+          onClick={() => handleOpenApp(EApplication.SYSTEM_SETTINGS)}
+        />
+      ),
     },
     {
       id: uuidv4(),

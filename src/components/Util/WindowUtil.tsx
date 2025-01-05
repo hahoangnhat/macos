@@ -5,17 +5,23 @@ interface IWindowUtil {
   onClose: () => void
   onMinimize?: () => void
   onMaximize?: () => void
+  className?: string
 }
 
-const WindowUtil = ({ onClose, onMinimize, onMaximize }: IWindowUtil) => {
+const WindowUtil = ({ onClose, onMinimize, onMaximize, className }: IWindowUtil) => {
   return (
-    <div className="group flex w-fit items-center gap-2 *:flex *:h-3 *:w-3 *:items-center *:justify-center *:rounded-full">
+    <div
+      className={classNames(
+        'group flex w-fit items-center gap-2 *:flex *:h-3 *:w-3 *:items-center *:justify-center *:rounded-full',
+        className,
+      )}
+    >
       <div className="bg-red-500" onClick={onClose}>
         <X size={10} className="hidden group-hover:block" />
       </div>
       <div
         className={classNames('bg-yellow-400', {
-          'border border-alabaster-400 !bg-transparent': !onMinimize,
+          'border border-alabaster-400 border-opacity-50 !bg-transparent': !onMinimize,
         })}
         onClick={onMinimize}
       >
@@ -23,7 +29,7 @@ const WindowUtil = ({ onClose, onMinimize, onMaximize }: IWindowUtil) => {
       </div>
       <div
         className={classNames('bg-green-500', {
-          'border border-alabaster-400 !bg-transparent': !onMinimize,
+          'border border-alabaster-400 border-opacity-50 !bg-transparent': !onMinimize,
         })}
         onClick={onMaximize}
       >
