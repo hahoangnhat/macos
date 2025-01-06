@@ -19,8 +19,19 @@ import {
   SunMedium,
   SunSnow,
   ToggleLeft,
+  Wallpaper,
   Wifi,
   Zap,
+  Image as ImageIcon,
+  BellDot,
+  Volume2,
+  Moon,
+  Clock2,
+  Lock as LockIcon,
+  Hand,
+  KeyRound,
+  UsersRound,
+  AtSign,
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { v4 as uuidv4 } from 'uuid'
@@ -87,6 +98,64 @@ const SystemSettings = () => {
       icon: <SunMedium className="h-4 w-4" />,
       name: t('system_settings.label.displays'),
     },
+    {
+      id: uuidv4(),
+      icon: <Wallpaper className="h-4 w-4" />,
+      name: t('system_settings.label.screen_saver'),
+    },
+    {
+      id: uuidv4(),
+      icon: <Search className="h-4 w-4" />,
+      name: t('system_settings.label.spotlight'),
+    },
+    {
+      id: uuidv4(),
+      icon: <ImageIcon className="h-4 w-4" />,
+      name: t('system_settings.label.wallpaper'),
+    },
+    {
+      id: uuidv4(),
+      icon: <BellDot className="h-4 w-4" />,
+      name: t('system_settings.label.notifications'),
+      className: 'mt-2',
+    },
+    { id: uuidv4(), icon: <Volume2 className="h-4 w-4" />, name: t('system_settings.label.sound') },
+    {
+      id: uuidv4(),
+      icon: <Moon className="h-4 w-4" />,
+      name: t('system_settings.label.focus'),
+    },
+    {
+      id: uuidv4(),
+      icon: <Clock2 className="h-4 w-4" />,
+      name: t('system_settings.label.screen_time'),
+    },
+    {
+      id: uuidv4(),
+      icon: <LockIcon className="h-4 w-4" />,
+      name: t('system_settings.label.lock_screen'),
+      className: 'mt-2',
+    },
+    {
+      id: uuidv4(),
+      icon: <Hand className="h-4 w-4" />,
+      name: t('system_settings.label.privacy_and_security'),
+    },
+    {
+      id: uuidv4(),
+      icon: <KeyRound className="h-4 w-4" />,
+      name: t('system_settings.label.login_password'),
+    },
+    {
+      id: uuidv4(),
+      icon: <UsersRound className="h-4 w-4" />,
+      name: t('system_settings.label.users_and_groups'),
+    },
+    {
+      id: uuidv4(),
+      icon: <AtSign className="h-4 w-4" />,
+      name: t('system_settings.label.internet_accounts'),
+    },
   ]
 
   return (
@@ -97,7 +166,7 @@ const SystemSettings = () => {
           hidden: appName !== EApplication.SYSTEM_SETTINGS,
         })}
       >
-        <div className="rounded-es-xl rounded-ss-xl bg-alabaster-200 px-2">
+        <div className="rounded-es-xl rounded-ss-xl bg-alabaster-50 bg-opacity-55 px-2 backdrop-blur-2xl">
           <WindowUtil onClose={() => dispatch(setAppName(''))} className="p-2 pb-5 pt-4" />
           <Input
             showStartIcon={<Search className="h-4 w-4" />}
@@ -107,10 +176,10 @@ const SystemSettings = () => {
               </div>
             }
           />
-          <div className="mt-2 max-h-[500px] w-full overflow-y-auto">
+          <div className="my-2 max-h-[500px] w-full overflow-y-auto pr-2">
             <div
               className={classNames('flex cursor-pointer items-center gap-1 rounded-md p-1', {
-                'bg-blue-500 bg-opacity-90 text-white': activeItem === 'user',
+                'bg-steel-blue-600 text-white': activeItem === 'user',
               })}
               onClick={() => setActiveItem('user')}
             >
