@@ -21,14 +21,14 @@ const AboutThisMac = () => {
       <div
         ref={aboutThisMacRef}
         className={classNames(
-          'flex w-fit flex-col gap-4 rounded-xl bg-alabaster-50 bg-opacity-55 p-4 backdrop-blur-2xl',
+          'flex w-fit flex-col gap-4 rounded-xl bg-alabaster-50 bg-opacity-55 p-2 backdrop-blur-2xl',
           {
             hidden: appName !== EApplication.ABOUT_THIS_MAC,
           },
         )}
       >
         <WindowUtil onClose={() => dispatch(setAppName(''))} />
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center p-4">
           <MacMiniIcon className="h-12 w-12" />
           <div className="mt-2 text-xl font-bold">{t('about_this_mac.label.mac_mini')}</div>
           <div className="text-[10px] text-alabaster-500">{t('about_this_mac.label.m1_2020')}</div>

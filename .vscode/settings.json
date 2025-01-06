@@ -12,5 +12,8 @@
     "source.fixAll.eslint": "explicit"
   },
   "workbench.iconTheme": "material-icon-theme",
-  "diffEditor.ignoreTrimWhitespace": false
+  "diffEditor.ignoreTrimWhitespace": false,
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
 }
