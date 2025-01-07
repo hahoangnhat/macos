@@ -21,7 +21,7 @@ const AboutThisMac = () => {
       <div
         ref={aboutThisMacRef}
         className={classNames(
-          'flex w-fit flex-col gap-4 rounded-xl bg-alabaster-50 bg-opacity-55 p-2 backdrop-blur-2xl',
+          'flex w-fit flex-col gap-4 rounded-xl bg-alabaster-300 p-2 shadow-md',
           {
             hidden: appName !== EApplication.ABOUT_THIS_MAC,
           },
@@ -40,7 +40,7 @@ const AboutThisMac = () => {
             <div className="text-end">{t('about_this_mac.label.mac_os')}</div>
             <div>{t('about_this_mac.label.sequoia_15_1_1')}</div>
           </div>
-          <div className="cancel-draggable mb-4 cursor-pointer rounded-md bg-alabaster-400 bg-opacity-70 px-2 py-1 text-xs hover:bg-alabaster-300">
+          <div className="cancel-draggable mb-4 cursor-pointer rounded-md bg-alabaster-400 bg-opacity-70 px-2 py-1 text-xs hover:bg-alabaster-200">
             {t('about_this_mac.button.more_info')}
           </div>
           <div className="cancel-draggable cursor-pointer text-[10px] text-alabaster-500 underline hover:opacity-60">

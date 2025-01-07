@@ -35,10 +35,10 @@ const SystemSettings = () => {
           hidden: appName !== EApplication.SYSTEM_SETTINGS,
         })}
       >
-        <div className="rounded-es-xl rounded-ss-xl bg-alabaster-50 bg-opacity-55 backdrop-blur-2xl">
+        <div className="rounded-es-xl rounded-ss-xl bg-alabaster-300">
           <div
             className={classNames('w-56 border-b px-2 pb-3', {
-              'border-alabaster-300': isScrolling,
+              'border-alabaster-400 border-opacity-55': isScrolling,
               'border-transparent': !isScrolling,
             })}
           >
