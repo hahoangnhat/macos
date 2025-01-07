@@ -1,0 +1,26 @@
+{
+  "label": {
+    "wifi": "Wi-Fi",
+    "bluetooth": "Bluetooth",
+    "network": "Network",
+    "energy": "Energy",
+    "general": "General",
+    "accessibility": "Accessibility",
+    "appearance": "Appearance",
+    "control_center": "Control Center",
+    "desktop_and_dock": "Desktop & Dock",
+    "displays": "Displays",
+    "screen_saver": "Screen Saver",
+    "spotlight": "Spotlight",
+    "wallpaper": "Wallpaper",
+    "notifications": "Notifications",
+    "sound": "Sound",
+    "focus": "Focus",
+    "screen_time": "Screen Time",
+    "lock_screen": "Lock screen",
+    "privacy_and_security": "Privacy & Security",
+    "login_password": "Login Password",
+    "users_and_groups": "Users & Groups",
+    "internet_accounts": "Internet Accounts"
+  }
+}

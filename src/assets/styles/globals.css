@@ -7,6 +7,20 @@
   body {
     width: 100%;
     height: 100%;
-    background-color: #655;
+    background: url('../images/desktop-background.jpg') center center;
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    @apply rounded-lg;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-lg bg-alabaster-500;
   }
 }

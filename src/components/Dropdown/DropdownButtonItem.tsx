@@ -22,9 +22,13 @@ const DropdownButtonItem = ({
         onClick={onClick}
       >
         <div className="text-nowrap group-hover:text-white">{label}</div>
-        {shortcut && <span className="text-alabaster-500 group-hover:text-white">{shortcut}</span>}
+        {shortcut && (
+          <span className="bg-opacity-55 text-alabaster-400 group-hover:text-white">
+            {shortcut}
+          </span>
+        )}
       </div>
-      {hasDivider && <div className="mx-2 my-1 h-px bg-alabaster-400"></div>}
+      {hasDivider && <div className="mx-2 my-1 h-px bg-alabaster-400 bg-opacity-55"></div>}
     </div>
   )
 }
