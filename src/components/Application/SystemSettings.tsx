@@ -18,8 +18,14 @@ const SystemSettings = () => {
   const settingsRef = useRef<HTMLDivElement>(null)
 
   const [activeItem, setActiveItem] = useState<string>('')
+  const [isScrolling, setIsScrolling] = useState<boolean>(false)
 
   const systemItems = useMemo(() => systemSettingItems(t), [t])
+
+  const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    const scrollTop = event.currentTarget.scrollTop
+    setIsScrolling(scrollTop > 0)
+  }
 
   return (
     <Draggable nodeRef={settingsRef} bounds="parent" cancel=".cancel-draggable">
@@ -29,17 +35,27 @@ const SystemSettings = () => {
           hidden: appName !== EApplication.SYSTEM_SETTINGS,
         })}
       >
-        <div className="w-56 rounded-es-xl rounded-ss-xl bg-alabaster-50 bg-opacity-55 px-2 backdrop-blur-2xl">
-          <WindowUtil onClose={() => dispatch(setAppName(''))} className="p-2 pb-5 pt-4" />
-          <Input
-            showStartIcon={<Search className="h-4 w-4" />}
-            showEndIcon={
-              <div className="h-4 w-4 p-px">
-                <CircleX className="h-full w-full" />
-              </div>
-            }
-          />
-          <div className="cancel-draggable my-2 max-h-[500px] w-full overflow-y-auto pr-3">
+        <div className="rounded-es-xl rounded-ss-xl bg-alabaster-50 bg-opacity-55 backdrop-blur-2xl">
+          <div
+            className={classNames('w-56 border-b px-2 pb-3', {
+              'border-alabaster-300': isScrolling,
+              'border-transparent': !isScrolling,
+            })}
+          >
+            <WindowUtil onClose={() => dispatch(setAppName(''))} className="p-2 pb-5 pt-4" />
+            <Input
+              showStartIcon={<Search className="h-4 w-4" />}
+              showEndIcon={
+                <div className="h-4 w-4 p-px">
+                  <CircleX className="h-full w-full" />
+                </div>
+              }
+            />
+          </div>
+          <div
+            className="cancel-draggable max-h-[500px] w-full overflow-y-auto px-2 py-2 pr-3"
+            onScroll={handleScroll}
+          >
             <div
               className={classNames('flex cursor-pointer items-center gap-1 rounded-md p-1', {
                 'bg-steel-blue-600 text-white': activeItem === 'user',
@@ -47,7 +63,7 @@ const SystemSettings = () => {
               onClick={() => setActiveItem('user')}
             >
               <CircleUserRound className="h-10 w-10" />
-              <div className="flex flex-col gap-1 text-sm">
+              <div className="flex flex-col gap-2 text-sm">
                 <div className="font-bold">{t('user.label.full_name')}</div>
                 <div className="text-xs">{t('user.label.apple_account')}</div>
               </div>
@@ -57,7 +73,7 @@ const SystemSettings = () => {
               <div
                 key={item.id}
                 className={classNames(
-                  'flex cursor-pointer items-center gap-1 rounded-md p-1',
+                  'flex cursor-pointer items-center gap-2 rounded-md p-1',
                   {
                     'bg-blue-500 bg-opacity-90 text-white': activeItem === item.id,
                   },
