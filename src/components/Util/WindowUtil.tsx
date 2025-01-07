@@ -21,7 +21,7 @@ const WindowUtil = ({ onClose, onMinimize, onMaximize, className }: IWindowUtil)
       </div>
       <div
         className={classNames('bg-yellow-400', {
-          'border border-alabaster-400 border-opacity-50 !bg-transparent': !onMinimize,
+          'border border-alabaster-400 border-opacity-70 !bg-transparent': !onMinimize,
         })}
         onClick={onMinimize}
       >
@@ -29,7 +29,7 @@ const WindowUtil = ({ onClose, onMinimize, onMaximize, className }: IWindowUtil)
       </div>
       <div
         className={classNames('bg-green-500', {
-          'border border-alabaster-400 border-opacity-50 !bg-transparent': !onMinimize,
+          'border border-alabaster-400 border-opacity-70 !bg-transparent': !onMinimize,
         })}
         onClick={onMaximize}
       >

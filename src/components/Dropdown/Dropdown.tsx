@@ -36,7 +36,7 @@ const Dropdown = ({
 
   const dropdownClassname = classNames(
     'w-max-content min-w-60 absolute top-full translate-y-0.5 text-xs select-none z-50',
-    'flex flex-col rounded-md bg-alabaster-50 bg-opacity-55 p-1 text-black backdrop-blur-2xl',
+    'flex flex-col rounded-md bg-alabaster-300 p-1 text-black shadow-md',
   )
 
   const handleToggle = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {

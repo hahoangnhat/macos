@@ -15,7 +15,7 @@ const DropdownSubMenu = ({
 }: IDropdownSubMenuProps) => {
   const dropdownClassname = classNames(
     'w-max-content min-w-60 absolute top-full translate-y-0.5 text-xs select-none z-50',
-    'flex flex-col rounded-md bg-alabaster-50 bg-opacity-55 p-1 text-black backdrop-blur-3xl',
+    'flex flex-col rounded-md bg-alabaster-300 p-1 text-black shadow-md',
   )
 
   return (
@@ -38,7 +38,7 @@ const DropdownSubMenu = ({
           {menuItems?.map((item: IDropdownItem) => <div key={item.id}>{item.item}</div>)}
         </div>
       </div>
-      {hasDivider && <div className="mx-2 my-1 h-px bg-alabaster-400"></div>}
+      {hasDivider && <div className="mx-2 my-1 h-px bg-alabaster-400 bg-opacity-55"></div>}
     </>
   )
 }
