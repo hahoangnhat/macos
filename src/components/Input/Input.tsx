@@ -14,7 +14,7 @@ const Input = ({ showStartIcon, showEndIcon, className, ...props }: IInputProps)
       )}
       <input
         className={classNames(
-          'w-full rounded-md border border-transparent bg-alabaster-200 bg-opacity-50 p-1 text-xs focus-visible:border-alabaster-400 focus-visible:outline-none',
+          'w-full rounded-md border border-alabaster-300 bg-alabaster-300 bg-opacity-50 p-1 text-xs focus-visible:border-alabaster-400 focus-visible:outline-none',
           { 'pl-6': showStartIcon, 'pr-6': showEndIcon },
           className,
         )}
