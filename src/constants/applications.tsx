@@ -24,6 +24,7 @@ import {
   UsersRound,
   AtSign,
 } from 'lucide-react'
+import { ISystemSettingItem } from '@/interfaces/applications'
 
 const enum EApplication {
   FINDER = 'Finder',
@@ -31,7 +32,7 @@ const enum EApplication {
   SYSTEM_SETTINGS = 'System Settings',
 }
 
-const systemSettingItems = (t: TTFunction) => [
+const generateSystemSettingItems = (t: TTFunction): ISystemSettingItem[] => [
   {
     id: uuidv4(),
     icon: <Wifi className="h-4 w-4" />,
@@ -144,4 +145,4 @@ const systemSettingItems = (t: TTFunction) => [
   },
 ]
 
-export { EApplication, systemSettingItems }
+export { EApplication, generateSystemSettingItems }
