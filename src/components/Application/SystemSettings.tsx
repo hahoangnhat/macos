@@ -49,7 +49,7 @@ const SystemSettings = () => {
     <Draggable nodeRef={settingsRef} bounds="parent" cancel=".cancel-draggable">
       <div
         ref={settingsRef}
-        className={classNames('flex w-fit', {
+        className={classNames('flex w-fit shadow-md', {
           hidden: appName !== EApplication.SYSTEM_SETTINGS,
         })}
       >
