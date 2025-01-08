@@ -21,6 +21,6 @@
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    @apply rounded-lg bg-alabaster-500;
+    @apply rounded-lg bg-alabaster-400;
   }
 }
