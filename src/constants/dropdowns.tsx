@@ -16,7 +16,7 @@ import {
 } from 'lucide-react'
 import { v4 as uuidv4 } from 'uuid'
 
-const finderUtils = (t: TTFunction): IDropdown[] => [
+const generateFinderUtils = (t: TTFunction): IDropdown[] => [
   {
     id: uuidv4(),
     label: t('finder.header.app_name'),
@@ -720,4 +720,4 @@ const finderUtils = (t: TTFunction): IDropdown[] => [
   },
 ]
 
-export { finderUtils }
+export { generateFinderUtils }
