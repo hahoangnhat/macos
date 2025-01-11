@@ -7,9 +7,41 @@ import Draggable from 'react-draggable'
 import { WindowUtil } from '../Util'
 import { setName as setAppName } from '@/stores/applications/slice'
 import { Input } from '../Input'
-import { CircleUserRound, CircleX, Search } from 'lucide-react'
+import { ChevronLeft, ChevronRight, CircleUserRound, CircleX, IdCard, Search } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { ISystemSettingItem } from '@/interfaces/applications'
+
+const AppleAccount = () => {
+  const t = useTranslations()
+
+  return (
+    <div className="w-112">
+      <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4 text-alabaster-500 *:h-6 *:w-6">
+          <ChevronLeft />
+          <ChevronRight />
+        </div>
+        <div className="text-sm font-semibold text-alabaster-900">
+          {t('user.label.apple_account')}
+        </div>
+      </div>
+
+      <div className="flex flex-col items-center justify-center py-5">
+        <CircleUserRound className="h-20 w-20" />
+        <div className="font-bold">{t('user.label.full_name')}</div>
+        <div className="text-sm">{t('user.label.email')}</div>
+      </div>
+
+      <div className="flex items-center justify-between rounded border border-alabaster-300 bg-alabaster-200 p-2">
+        <div className="flex items-center gap-2">
+          <IdCard />
+          <div>{t('user.label.personal_information')}</div>
+        </div>
+        <ChevronRight className="h-4 w-4" />
+      </div>
+    </div>
+  )
+}
 
 const SystemSettings = () => {
   const t = useTranslations()
@@ -18,15 +50,6 @@ const SystemSettings = () => {
 
   const settingsRef = useRef<HTMLDivElement>(null)
 
-  const [activeItem, setActiveItem] = useState<ISystemSettingItem | null>(null)
-  const [isScrolling, setIsScrolling] = useState<boolean>(false)
-  const [query, setQuery] = useState<string>('')
-
-  const systemItems = useMemo(
-    () => generateSystemSettingItems(t).filter((item) => item.name.includes(query)),
-    [t, query],
-  )
-
   const userItem = useMemo(
     () => ({
       id: 'user',
@@ -34,6 +57,15 @@ const SystemSettings = () => {
       name: t('user.label.apple_account'),
     }),
     [t],
+  )
+
+  const [activeItem, setActiveItem] = useState<ISystemSettingItem>(userItem)
+  const [isScrolling, setIsScrolling] = useState<boolean>(false)
+  const [query, setQuery] = useState<string>('')
+
+  const systemItems = useMemo(
+    () => generateSystemSettingItems(t).filter((item) => item.name.includes(query)),
+    [t, query],
   )
 
   const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
@@ -86,7 +118,7 @@ const SystemSettings = () => {
               onClick={() => setActiveItem(userItem)}
             >
               <CircleUserRound className="h-10 w-10" />
-              <div className="flex flex-col gap-2 text-sm">
+              <div className="text-sm">
                 <div className="font-bold">{t('user.label.full_name')}</div>
                 <div className="text-xs">{t('user.label.apple_account')}</div>
               </div>
@@ -111,7 +143,7 @@ const SystemSettings = () => {
           </div>
         </div>
         <div className="rounded-ee-xl rounded-se-xl bg-alabaster-100 p-4">
-          <div>{activeItem?.name}</div>
+          {activeItem?.id === 'user' && <AppleAccount />}
         </div>
       </div>
     </Draggable>

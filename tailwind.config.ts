@@ -36,6 +36,9 @@ export default {
           '950': '#222e49',
         },
       },
+      width: {
+        112: '28rem',
+      },
     },
   },
   plugins: [],
