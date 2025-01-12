@@ -1,5 +1,5 @@
 'use client'
-import { EApplication, generateSystemSettingItems } from '@/constants'
+import { EApplication, ESystemSettingItem, generateSystemSettingItems } from '@/constants'
 import { useAppDispatch, useAppSelector } from '@/stores/hooks'
 import classNames from 'classnames'
 import { ChangeEvent, ReactNode, useMemo, useRef, useState } from 'react'
@@ -83,6 +83,18 @@ const AppleAccount = () => {
   )
 }
 
+const General = () => {
+  const t = useTranslations()
+
+  return (
+    <SystemWindow>
+      <div className="mt-4 rounded border border-alabaster-300 border-opacity-30 bg-alabaster-200 bg-opacity-25 p-2">
+        <div>{t('system_settings.label.general')}</div>
+      </div>
+    </SystemWindow>
+  )
+}
+
 const SystemSettings = () => {
   const t = useTranslations()
   const dispatch = useAppDispatch()
@@ -92,7 +104,7 @@ const SystemSettings = () => {
 
   const userItem = useMemo(
     () => ({
-      id: 'user',
+      id: ESystemSettingItem.USER,
       icon: '',
       name: t('user.label.apple_account'),
     }),
@@ -153,7 +165,7 @@ const SystemSettings = () => {
           >
             <div
               className={classNames('flex cursor-pointer items-center gap-1 rounded-md p-1', {
-                'bg-steel-blue-600 text-white': activeItem?.id === 'user',
+                'bg-steel-blue-600 text-white': activeItem?.id === ESystemSettingItem.USER,
               })}
               onClick={() => setActiveItem(userItem)}
             >
@@ -183,7 +195,8 @@ const SystemSettings = () => {
           </div>
         </div>
         <div className="rounded-ee-xl rounded-se-xl bg-alabaster-100 p-4">
-          {activeItem?.id === 'user' && <AppleAccount />}
+          {activeItem?.id === ESystemSettingItem.USER && <AppleAccount />}
+          {activeItem?.id === ESystemSettingItem.GENERAL && <General />}
         </div>
       </div>
     </Draggable>
