@@ -2,7 +2,7 @@
 import { EApplication, generateSystemSettingItems } from '@/constants'
 import { useAppDispatch, useAppSelector } from '@/stores/hooks'
 import classNames from 'classnames'
-import { ChangeEvent, useMemo, useRef, useState } from 'react'
+import { ChangeEvent, ReactNode, useMemo, useRef, useState } from 'react'
 import Draggable from 'react-draggable'
 import { WindowUtil } from '../Util'
 import { setName as setAppName } from '@/stores/applications/slice'
@@ -11,9 +11,12 @@ import { ChevronLeft, ChevronRight, CircleUserRound, CircleX, IdCard, Search } f
 import { useTranslations } from 'next-intl'
 import { ISystemSettingItem } from '@/interfaces/applications'
 
-const AppleAccount = () => {
-  const t = useTranslations()
+interface ISystemWindowProps {
+  children: ReactNode
+  applicationName?: string
+}
 
+const SystemWindow = ({ children, applicationName }: ISystemWindowProps) => {
   return (
     <div className="w-112">
       <div className="flex items-center gap-3">
@@ -21,25 +24,62 @@ const AppleAccount = () => {
           <ChevronLeft />
           <ChevronRight />
         </div>
-        <div className="text-sm font-semibold text-alabaster-900">
-          {t('user.label.apple_account')}
-        </div>
+        {applicationName && (
+          <div className="text-sm font-semibold text-alabaster-900">{applicationName}</div>
+        )}
       </div>
 
-      <div className="flex flex-col items-center justify-center py-5">
-        <CircleUserRound className="h-20 w-20" />
-        <div className="font-bold">{t('user.label.full_name')}</div>
-        <div className="text-sm">{t('user.label.email')}</div>
-      </div>
-
-      <div className="flex items-center justify-between rounded border border-alabaster-300 bg-alabaster-200 p-2">
-        <div className="flex items-center gap-2">
-          <IdCard />
-          <div>{t('user.label.personal_information')}</div>
-        </div>
-        <ChevronRight className="h-4 w-4" />
-      </div>
+      {children}
     </div>
+  )
+}
+
+const AppleAccount = () => {
+  const t = useTranslations()
+  const [showUserInformation, setShowUserInformation] = useState<boolean>(false)
+
+  return (
+    <SystemWindow applicationName={t('user.label.apple_account')}>
+      {!showUserInformation && (
+        <>
+          <div className="flex flex-col items-center justify-center py-5">
+            <CircleUserRound className="h-20 w-20" />
+            <div className="font-bold">{t('user.label.full_name')}</div>
+            <div className="text-sm">{t('user.label.email')}</div>
+          </div>
+
+          <div
+            className="flex cursor-pointer items-center justify-between rounded border border-alabaster-300 border-opacity-30 bg-alabaster-200 bg-opacity-25 p-2"
+            onClick={() => setShowUserInformation(true)}
+          >
+            <div className="flex items-center gap-2">
+              <IdCard />
+              <div className="text-sm">{t('user.label.personal_information')}</div>
+            </div>
+            <ChevronRight className="h-4 w-4 text-alabaster-400" />
+          </div>
+        </>
+      )}
+
+      {showUserInformation && (
+        <div className="mt-4 flex flex-col gap-2 rounded border border-alabaster-300 border-opacity-30 bg-alabaster-200 bg-opacity-25 p-2">
+          <div className="flex cursor-pointer items-center justify-between text-xs">
+            <div>{t('user.label.name')}</div>
+            <div className="flex items-center gap-2 text-alabaster-400">
+              <div>{t('user.label.full_name')}</div>
+              <ChevronRight className="h-4 w-4 text-alabaster-400" />
+            </div>
+          </div>
+
+          <div className="h-px w-full bg-alabaster-300 bg-opacity-30"></div>
+
+          <div className="flex cursor-pointer items-center justify-between text-xs">
+            <div>{t('user.label.date_of_birth')}</div>
+            <div className="mr-2 text-alabaster-400">{t('user.label.birth_date')}</div>
+          </div>
+        </div>
+      )}
+    </SystemWindow>
   )
 }
 
