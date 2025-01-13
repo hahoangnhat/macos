@@ -8,6 +8,9 @@
       "go": "Đi",
       "window": "Cửa sổ",
       "help": "Trợ giúp"
+    },
+    "dropdown": {
+      "about": "Giới thiệu về Finder"
     }
   }
 }
