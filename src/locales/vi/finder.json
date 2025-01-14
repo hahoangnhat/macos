@@ -10,7 +10,8 @@
       "help": "Trợ giúp"
     },
     "dropdown": {
-      "about": "Giới thiệu về Finder"
+      "about": "Giới thiệu về Finder",
+      "settings": "Cài đặt..."
     }
   }
 }
