@@ -11,7 +11,8 @@
     },
     "dropdown": {
       "about": "Giới thiệu về Finder",
-      "settings": "Cài đặt..."
+      "settings": "Cài đặt...",
+      "empty_trash": "Làm sạch thùng rác"
     }
   }
 }
