@@ -95,34 +95,50 @@ const AppleAccount = () => {
 const General = () => {
   const t = useTranslations()
 
+  const [showAbout, setShowAbout] = useState<boolean>(false)
+  const [showSoftwareUpdates, setShowSoftwareUpdates] = useState<boolean>(false)
+
   return (
     <SystemWindow>
-      <div className="mt-2 rounded border border-alabaster-300 border-opacity-30 bg-alabaster-200 bg-opacity-25 p-2">
-        <div className="text-center text-xl font-bold">{t('system_settings.label.general')}</div>
-        <div className="text-center text-xs text-alabaster-400">
-          {t('system_settings.note.general')}
-        </div>
-      </div>
-
-      <div className="mt-2 flex cursor-pointer flex-col gap-2 rounded border border-alabaster-300 border-opacity-30 bg-alabaster-200 bg-opacity-25 p-2">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <HardDrive size={20} />
-            <div className="text-sm">{t('system_settings.label.about')}</div>
+      {!showAbout && !showSoftwareUpdates && (
+        <>
+          <div className="mt-2 rounded border border-alabaster-300 border-opacity-30 bg-alabaster-200 bg-opacity-25 p-2">
+            <div className="text-center text-xl font-bold">
+              {t('system_settings.label.general')}
+            </div>
+            <div className="text-center text-xs text-alabaster-400">
+              {t('system_settings.note.general')}
+            </div>
           </div>
-          <ChevronRight size={16} className="text-alabaster-400" />
-        </div>
 
-        <div className="border-t border-alabaster-300 border-opacity-30"></div>
+          <div className="mt-2 flex cursor-pointer flex-col gap-2 rounded border border-alabaster-300 border-opacity-30 bg-alabaster-200 bg-opacity-25 p-2">
+            <div className="flex items-center justify-between" onClick={() => setShowAbout(true)}>
+              <div className="flex items-center gap-2">
+                <HardDrive size={20} />
+                <div className="text-sm">{t('system_settings.label.about')}</div>
+              </div>
+              <ChevronRight size={16} className="text-alabaster-400" />
+            </div>
 
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <GitCompareArrows size={20} />
-            <div className="text-sm">{t('system_settings.label.software_updates')}</div>
+            <div className="border-t border-alabaster-300 border-opacity-30"></div>
+
+            <div
+              className="flex items-center justify-between"
+              onClick={() => setShowSoftwareUpdates(true)}
+            >
+              <div className="flex items-center gap-2">
+                <GitCompareArrows size={20} />
+                <div className="text-sm">{t('system_settings.label.software_updates')}</div>
+              </div>
+              <ChevronRight size={16} className="text-alabaster-400" />
+            </div>
           </div>
-          <ChevronRight size={16} className="text-alabaster-400" />
-        </div>
-      </div>
+        </>
+      )}
+
+      {showAbout && <div>About</div>}
+
+      {showSoftwareUpdates && <div>Software Updates</div>}
     </SystemWindow>
   )
 }
