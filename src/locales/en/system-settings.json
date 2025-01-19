@@ -1,9 +1,5 @@
 {
   "label": {
-    "wifi": "Wi-Fi",
-    "bluetooth": "Bluetooth",
-    "network": "Network",
-    "energy": "Energy",
     "general": "General",
     "accessibility": "Accessibility",
     "appearance": "Appearance",
@@ -21,6 +17,11 @@
     "privacy_and_security": "Privacy & Security",
     "login_password": "Login Password",
     "users_and_groups": "Users & Groups",
-    "internet_accounts": "Internet Accounts"
+    "internet_accounts": "Internet Accounts",
+    "about": "About",
+    "software_updates": "Software Updates"
+  },
+  "note": {
+    "general": "Manage your overall setup and preferences for Mac, such as software updates, device language, and more."
   }
 }

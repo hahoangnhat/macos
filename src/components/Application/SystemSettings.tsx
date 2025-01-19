@@ -7,7 +7,16 @@ import Draggable from 'react-draggable'
 import { WindowUtil } from '../Util'
 import { setName as setAppName } from '@/stores/applications/slice'
 import { Input } from '../Input'
-import { ChevronLeft, ChevronRight, CircleUserRound, CircleX, IdCard, Search } from 'lucide-react'
+import {
+  ChevronLeft,
+  ChevronRight,
+  CircleUserRound,
+  CircleX,
+  GitCompareArrows,
+  HardDrive,
+  IdCard,
+  Search,
+} from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { ISystemSettingItem } from '@/interfaces/applications'
 
@@ -18,8 +27,8 @@ interface ISystemWindowProps {
 
 const SystemWindow = ({ children, applicationName }: ISystemWindowProps) => {
   return (
-    <div className="w-112">
-      <div className="flex items-center gap-3">
+    <div className="flex h-full w-112 flex-col">
+      <div className="flex items-center gap-3 p-4">
         <div className="flex items-center gap-4 text-alabaster-500 *:h-6 *:w-6">
           <ChevronLeft />
           <ChevronRight />
@@ -29,7 +38,7 @@ const SystemWindow = ({ children, applicationName }: ISystemWindowProps) => {
         )}
       </div>
 
-      {children}
+      <div className="cancel-draggable flex-1 p-4 pt-0">{children}</div>
     </div>
   )
 }
@@ -88,8 +97,31 @@ const General = () => {
 
   return (
     <SystemWindow>
-      <div className="mt-4 rounded border border-alabaster-300 border-opacity-30 bg-alabaster-200 bg-opacity-25 p-2">
-        <div>{t('system_settings.label.general')}</div>
+      <div className="mt-2 rounded border border-alabaster-300 border-opacity-30 bg-alabaster-200 bg-opacity-25 p-2">
+        <div className="text-center text-xl font-bold">{t('system_settings.label.general')}</div>
+        <div className="text-center text-xs text-alabaster-400">
+          {t('system_settings.note.general')}
+        </div>
+      </div>
+
+      <div className="mt-2 flex cursor-pointer flex-col gap-2 rounded border border-alabaster-300 border-opacity-30 bg-alabaster-200 bg-opacity-25 p-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <HardDrive size={20} />
+            <div className="text-sm">{t('system_settings.label.about')}</div>
+          </div>
+          <ChevronRight size={16} className="text-alabaster-400" />
+        </div>
+
+        <div className="border-t border-alabaster-300 border-opacity-30"></div>
+
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <GitCompareArrows size={20} />
+            <div className="text-sm">{t('system_settings.label.software_updates')}</div>
+          </div>
+          <ChevronRight size={16} className="text-alabaster-400" />
+        </div>
       </div>
     </SystemWindow>
   )
@@ -194,7 +226,7 @@ const SystemSettings = () => {
             ))}
           </div>
         </div>
-        <div className="rounded-ee-xl rounded-se-xl bg-alabaster-100 p-4">
+        <div className="rounded-ee-xl rounded-se-xl bg-alabaster-100">
           {activeItem?.id === ESystemSettingItem.USER && <AppleAccount />}
           {activeItem?.id === ESystemSettingItem.GENERAL && <General />}
         </div>
