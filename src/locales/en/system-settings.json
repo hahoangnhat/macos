@@ -19,9 +19,14 @@
     "users_and_groups": "Users & Groups",
     "internet_accounts": "Internet Accounts",
     "about": "About",
-    "software_updates": "Software Updates"
+    "software_updates": "Software Updates",
+    "description": "Description",
+    "version": "Version"
   },
   "note": {
-    "general": "Manage your overall setup and preferences for Mac, such as software updates, device language, and more."
+    "general": "Manage your overall setup and preferences for Mac, such as software updates, device language, and more.",
+    "about": "Simple macOS Sequoia 15.1.1 Clone with Next.js",
+    "description": "This project is a personal learning exercise to explore and practice using Next.js. The goal is to create a simple clone of macOS Sequoia 15.1.1 to understand its UI and functionality better.",
+    "version": "1.0.0"
   }
 }

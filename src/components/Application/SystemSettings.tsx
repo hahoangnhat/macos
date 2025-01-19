@@ -136,7 +136,26 @@ const General = () => {
         </>
       )}
 
-      {showAbout && <div>About</div>}
+      {showAbout && (
+        <div>
+          <div className="text-center text-xl font-bold">{t('system_settings.label.about')}</div>
+          <div className="text-center text-xs text-alabaster-400">
+            {t('system_settings.note.about')}
+          </div>
+          <div className="mt-4">
+            <div className="text-sm font-semibold">{t('system_settings.label.version')}</div>
+            <div className="mt-1 text-xs text-alabaster-400">
+              {t('system_settings.note.version')}
+            </div>
+            <div className="mt-2 text-sm font-semibold">
+              {t('system_settings.label.description')}
+            </div>
+            <div className="mt-1 text-xs text-alabaster-400">
+              {t('system_settings.note.description')}
+            </div>
+          </div>
+        </div>
+      )}
 
       {showSoftwareUpdates && <div>Software Updates</div>}
     </SystemWindow>
