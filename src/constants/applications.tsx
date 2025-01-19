@@ -1,18 +1,14 @@
 import { TTFunction } from '@/interfaces'
 import { v4 as uuidv4 } from 'uuid'
 import {
-  Bluetooth,
   Cog,
   Dock,
-  Globe,
   PersonStanding,
   Search,
   SunMedium,
   SunSnow,
   ToggleLeft,
   Wallpaper,
-  Wifi,
-  Zap,
   Image as ImageIcon,
   BellDot,
   Volume2,
@@ -24,6 +20,7 @@ import {
   UsersRound,
   AtSign,
 } from 'lucide-react'
+import { ISystemSettingItem } from '@/interfaces/applications'
 
 const enum EApplication {
   FINDER = 'Finder',
@@ -31,30 +28,14 @@ const enum EApplication {
   SYSTEM_SETTINGS = 'System Settings',
 }
 
-const systemSettingItems = (t: TTFunction) => [
+const ESystemSettingItem = {
+  USER: 'user',
+  GENERAL: 'general',
+}
+
+const generateSystemSettingItems = (t: TTFunction): ISystemSettingItem[] => [
   {
-    id: uuidv4(),
-    icon: <Wifi className="h-4 w-4" />,
-    name: t('system_settings.label.wifi'),
-    className: 'mt-2',
-  },
-  {
-    id: uuidv4(),
-    icon: <Bluetooth className="h-4 w-4" />,
-    name: t('system_settings.label.bluetooth'),
-  },
-  {
-    id: uuidv4(),
-    icon: <Globe className="h-4 w-4" />,
-    name: t('system_settings.label.network'),
-  },
-  {
-    id: uuidv4(),
-    icon: <Zap className="h-4 w-4" />,
-    name: t('system_settings.label.energy'),
-  },
-  {
-    id: uuidv4(),
+    id: ESystemSettingItem.GENERAL,
     icon: <Cog className="h-4 w-4" />,
     name: t('system_settings.label.general'),
     className: 'mt-2',
@@ -144,4 +125,4 @@ const systemSettingItems = (t: TTFunction) => [
   },
 ]
 
-export { EApplication, systemSettingItems }
+export { EApplication, ESystemSettingItem, generateSystemSettingItems }

@@ -11,7 +11,7 @@
   }
 
   ::-webkit-scrollbar {
-    @apply w-2;
+    @apply w-1.5;
   }
 
   /* Track */
@@ -21,6 +21,6 @@
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    @apply rounded-lg bg-alabaster-500;
+    @apply rounded-lg bg-alabaster-400;
   }
 }

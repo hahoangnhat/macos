@@ -8,6 +8,12 @@
       "go": "Đi",
       "window": "Cửa sổ",
       "help": "Trợ giúp"
+    },
+    "dropdown": {
+      "about": "Giới thiệu về Finder",
+      "settings": "Cài đặt...",
+      "empty_trash": "Làm sạch thùng rác",
+      "services": "Dịch vụ"
     }
   }
 }
