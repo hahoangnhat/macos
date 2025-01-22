@@ -21,7 +21,7 @@ const AboutThisMac = () => {
       <div
         ref={aboutThisMacRef}
         className={classNames(
-          'flex w-fit flex-col gap-4 rounded-xl bg-alabaster-200 p-2 shadow-md',
+          'flex w-fit select-none flex-col gap-4 rounded-xl bg-alabaster-200 p-2 shadow-md',
           {
             hidden: appName !== EApplication.ABOUT_THIS_MAC,
           },
