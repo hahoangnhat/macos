@@ -1,5 +1,10 @@
 'use client'
-import { EApplication, ESystemSettingItem, generateSystemSettingItems } from '@/constants'
+import {
+  EApplication,
+  ESystemSettingItem,
+  generateSystemSettingItems,
+  releaseNotes,
+} from '@/constants'
 import { useAppDispatch, useAppSelector } from '@/stores/hooks'
 import classNames from 'classnames'
 import { ChangeEvent, ReactNode, useMemo, useRef, useState } from 'react'
@@ -157,7 +162,32 @@ const General = () => {
         </div>
       )}
 
-      {showSoftwareUpdates && <div>Software Updates</div>}
+      {showSoftwareUpdates && (
+        <div>
+          {releaseNotes.map((note) => (
+            <div key={note.id}>
+              <div className="text-xl font-medium">
+                {t('system_settings.label.release_version', {
+                  version: note.version,
+                })}
+              </div>
+              <div className="text-sm text-alabaster-500">{note.description}</div>
+              <div className="my-2 font-medium">{t('system_settings.label.whats_new')}</div>
+              <ul className="flex flex-col gap-1 text-sm text-alabaster-500">
+                {note.news.map((item) => (
+                  <li key={item.id}>
+                    {t.rich('system_settings.label.new_item', {
+                      title: item.title,
+                      description: item.description,
+                      strong: (chunk) => <strong>{chunk}</strong>,
+                    })}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
     </SystemWindow>
   )
 }
@@ -200,7 +230,7 @@ const SystemSettings = () => {
     <Draggable nodeRef={settingsRef} bounds="parent" cancel=".cancel-draggable">
       <div
         ref={settingsRef}
-        className={classNames('flex w-fit shadow-md', {
+        className={classNames('flex w-fit select-none shadow-md', {
           hidden: appName !== EApplication.SYSTEM_SETTINGS,
         })}
       >

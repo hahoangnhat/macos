@@ -21,7 +21,10 @@
     "about": "About",
     "software_updates": "Software Updates",
     "description": "Description",
-    "version": "Version"
+    "version": "Version",
+    "release_version": "Release {version}",
+    "whats_new": "What's New",
+    "new_item": "• <strong>{title}</strong>: {description}"
   },
   "note": {
     "general": "Manage your overall setup and preferences for Mac, such as software updates, device language, and more.",
