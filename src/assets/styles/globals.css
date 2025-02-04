@@ -2,12 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'SF Pro';
+  src: url('../fonts/SF-Pro-Display-Regular.otf') format('opentype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'SF Pro';
+  src: url('../fonts/SF-Pro-Display-Regular-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
 @layer base {
   html,
   body {
     @apply h-full w-full;
     background: url('../images/desktop-background.jpg') center center;
-    font-family: var(--font-jetbrains);
+    font-family: 'SF Pro';
   }
 
   ::-webkit-scrollbar {
