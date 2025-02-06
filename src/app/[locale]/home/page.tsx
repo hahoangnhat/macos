@@ -4,7 +4,7 @@ import { AboutThisMac, SystemSettings } from '@/components'
 
 const Home = () => {
   return (
-    <div className="relative h-full w-full">
+    <div className="relative h-full w-full overflow-hidden">
       <AboutThisMac />
       <SystemSettings />
     </div>

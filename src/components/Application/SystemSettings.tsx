@@ -10,7 +10,7 @@ import classNames from 'classnames'
 import { ChangeEvent, ReactNode, useMemo, useRef, useState } from 'react'
 import Draggable from 'react-draggable'
 import { WindowUtil } from '../Util'
-import { setName as setAppName } from '@/stores/applications/slice'
+import { closeApplication } from '@/stores/applications/slice'
 import { Input } from '../Input'
 import {
   ChevronLeft,
@@ -33,7 +33,7 @@ interface ISystemWindowProps {
 const SystemWindow = ({ children, applicationName }: ISystemWindowProps) => {
   return (
     <div className="flex h-full w-112 flex-col">
-      <div className="flex items-center gap-3 p-4">
+      <div className="flex cursor-move items-center gap-3 p-4">
         <div className="flex items-center gap-4 text-alabaster-500 *:h-6 *:w-6">
           <ChevronLeft />
           <ChevronRight />
@@ -195,7 +195,11 @@ const General = () => {
 const SystemSettings = () => {
   const t = useTranslations()
   const dispatch = useAppDispatch()
-  const appName = useAppSelector((state) => state.application.name)
+  const openApplications = useAppSelector((state) => state.application.openApplications)
+  const isSystemSettingApplicationOpened = useMemo(
+    () => openApplications.includes(EApplication.SYSTEM_SETTINGS),
+    [openApplications],
+  )
 
   const settingsRef = useRef<HTMLDivElement>(null)
 
@@ -227,21 +231,30 @@ const SystemSettings = () => {
   }
 
   return (
-    <Draggable nodeRef={settingsRef} bounds="parent" cancel=".cancel-draggable">
+    <Draggable
+      nodeRef={settingsRef}
+      bounds="parent"
+      cancel=".cancel-draggable"
+      defaultPosition={{ x: 0, y: 0 }}
+    >
       <div
         ref={settingsRef}
         className={classNames('flex w-fit select-none shadow-md', {
-          hidden: appName !== EApplication.SYSTEM_SETTINGS,
+          'opacity-0': !isSystemSettingApplicationOpened,
         })}
       >
+        {/* Sidebar */}
         <div className="rounded-es-xl rounded-ss-xl bg-alabaster-200">
           <div
-            className={classNames('w-56 border-b px-2 pb-3', {
+            className={classNames('w-56 cursor-move border-b px-2', {
               'border-alabaster-400 border-opacity-55': isScrolling,
               'border-transparent': !isScrolling,
             })}
           >
-            <WindowUtil onClose={() => dispatch(setAppName(''))} className="p-2 pb-5 pt-4" />
+            <WindowUtil
+              onClose={() => dispatch(closeApplication(EApplication.SYSTEM_SETTINGS))}
+              className="p-2 pb-5 pt-4"
+            />
             <Input
               showStartIcon={<Search className="h-4 w-4" />}
               {...(query && {
@@ -257,7 +270,7 @@ const SystemSettings = () => {
             />
           </div>
           <div
-            className="cancel-draggable h-[500px] w-full overflow-y-auto px-2 py-2 pr-3"
+            className="cancel-draggable h-[500px] w-full overflow-y-auto px-2 pb-2 pr-3 pt-5"
             onScroll={handleScroll}
           >
             <div
@@ -291,6 +304,8 @@ const SystemSettings = () => {
             ))}
           </div>
         </div>
+
+        {/* Content */}
         <div className="rounded-ee-xl rounded-se-xl bg-alabaster-100">
           {activeItem?.id === ESystemSettingItem.USER && <AppleAccount />}
           {activeItem?.id === ESystemSettingItem.GENERAL && <General />}

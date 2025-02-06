@@ -1,11 +1,11 @@
 'use client'
 
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import Draggable from 'react-draggable'
 import { WindowUtil } from '../Util'
 import { useTranslations } from 'next-intl'
 import { MacMiniIcon } from '../Icons'
-import { setName as setAppName } from '@/stores/applications/slice'
+import { closeApplication } from '@/stores/applications/slice'
 import classNames from 'classnames'
 import { useAppDispatch, useAppSelector } from '@/stores/hooks'
 import { EApplication } from '@/constants'
@@ -13,21 +13,31 @@ import { EApplication } from '@/constants'
 const AboutThisMac = () => {
   const t = useTranslations()
   const dispatch = useAppDispatch()
-  const { name: appName } = useAppSelector((state) => state.application)
+  const openApplications = useAppSelector((state) => state.application.openApplications)
+  const isAboutThisMacApplicationOpened = useMemo(
+    () => openApplications.includes(EApplication.ABOUT_THIS_MAC),
+    [openApplications],
+  )
+
   const aboutThisMacRef = useRef<HTMLDivElement>(null)
 
   return (
-    <Draggable nodeRef={aboutThisMacRef} bounds="parent" cancel=".cancel-draggable">
+    <Draggable
+      nodeRef={aboutThisMacRef}
+      bounds="parent"
+      cancel=".cancel-draggable"
+      defaultPosition={{ x: 0, y: 0 }}
+    >
       <div
         ref={aboutThisMacRef}
         className={classNames(
-          'flex w-fit select-none flex-col gap-4 rounded-xl bg-alabaster-200 p-2 shadow-md',
+          'flex w-fit cursor-move select-none flex-col gap-4 rounded-xl bg-alabaster-200 p-2 shadow-md',
           {
-            hidden: appName !== EApplication.ABOUT_THIS_MAC,
+            'opacity-0': !isAboutThisMacApplicationOpened,
           },
         )}
       >
-        <WindowUtil onClose={() => dispatch(setAppName(''))} />
+        <WindowUtil onClose={() => dispatch(closeApplication(EApplication.ABOUT_THIS_MAC))} />
         <div className="flex flex-col items-center p-4">
           <MacMiniIcon className="h-12 w-12" />
           <div className="mt-2 text-xl font-bold">{t('about_this_mac.label.mac_mini')}</div>

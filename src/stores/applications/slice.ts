@@ -2,28 +2,33 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IDropdown } from '@/interfaces'
 
 export interface ApplicationState {
-  name: string
-  utils: IDropdown[]
+  openApplications: string[]
+  applicationUtils: IDropdown[]
 }
 
 const initialState: ApplicationState = {
-  name: '',
-  utils: [],
+  openApplications: [],
+  applicationUtils: [],
 }
 
 export const counterSlice = createSlice({
   name: 'application',
   initialState,
   reducers: {
-    setName: (state: ApplicationState, action: PayloadAction<string>) => {
-      state.name = action.payload
+    openApplication: (state: ApplicationState, action: PayloadAction<string>) => {
+      state.openApplications.push(action.payload)
     },
-    setUtils: (state: ApplicationState, action: PayloadAction<IDropdown[]>) => {
-      state.utils = action.payload
+    closeApplication: (state: ApplicationState, action: PayloadAction<string>) => {
+      state.openApplications = state.openApplications.filter(
+        (application: string) => application !== action.payload,
+      )
+    },
+    setApplicationUtils: (state: ApplicationState, action: PayloadAction<IDropdown[]>) => {
+      state.applicationUtils = action.payload
     },
   },
 })
 
-export const { setName, setUtils } = counterSlice.actions
+export const { openApplication, closeApplication, setApplicationUtils } = counterSlice.actions
 
 export default counterSlice.reducer

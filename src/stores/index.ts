@@ -8,8 +8,8 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ['application/setUtils'],
-        ignoredPaths: ['application.utils'],
+        ignoredActions: ['application/setApplicationUtils'],
+        ignoredPaths: ['application.applicationUtils'],
       },
     }),
 })
