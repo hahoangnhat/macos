@@ -10,7 +10,7 @@ import { DropdownButtonItem, FinderIcon } from '@/components'
 import DropdownSubMenu from '@/components/Dropdown/DropdownSubMenu'
 import { IDropdown, IDropdownItem, TTFunction } from '@/interfaces'
 import { v4 as uuidv4 } from 'uuid'
-import { setName as setAppName } from '@/stores/applications/slice'
+import { openApplication } from '@/stores/applications/slice'
 import { useAppDispatch } from '@/stores/hooks'
 
 interface IHeaderProps {
@@ -26,7 +26,7 @@ const Header = ({ utils }: IHeaderProps) => {
   const [activeItem, setActiveItem] = useState<string>('')
 
   const handleOpenApp = (appName: EApplication) => {
-    dispatch(setAppName(appName))
+    dispatch(openApplication(appName))
     setMenuActive(false)
     setActiveItem('')
   }
