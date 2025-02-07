@@ -10,7 +10,7 @@ import classNames from 'classnames'
 import { ChangeEvent, ReactNode, useMemo, useRef, useState } from 'react'
 import Draggable from 'react-draggable'
 import { WindowUtil } from '../Util'
-import { closeApplication } from '@/stores/applications/slice'
+import { closeApplication, setActiveApplication } from '@/stores/applications/slice'
 import { Input } from '../Input'
 import {
   ChevronLeft,
@@ -27,19 +27,24 @@ import { ISystemSettingItem } from '@/interfaces/applications'
 
 interface ISystemWindowProps {
   children: ReactNode
-  applicationName?: string
+  sectionName?: string
+  isAppActive?: boolean
 }
 
-const SystemWindow = ({ children, applicationName }: ISystemWindowProps) => {
+const SystemWindow = ({ children, sectionName, isAppActive }: ISystemWindowProps) => {
   return (
     <div className="flex h-full w-112 flex-col">
-      <div className="flex cursor-move items-center gap-3 p-4">
+      <div
+        className={classNames('flex items-center gap-3 p-4', {
+          'cursor-move': isAppActive,
+        })}
+      >
         <div className="flex items-center gap-4 text-alabaster-500 *:h-6 *:w-6">
           <ChevronLeft />
           <ChevronRight />
         </div>
-        {applicationName && (
-          <div className="text-sm font-semibold text-alabaster-900">{applicationName}</div>
+        {sectionName && (
+          <div className="text-sm font-semibold text-alabaster-900">{sectionName}</div>
         )}
       </div>
 
@@ -48,12 +53,12 @@ const SystemWindow = ({ children, applicationName }: ISystemWindowProps) => {
   )
 }
 
-const AppleAccount = () => {
+const AppleAccount = ({ isAppActive }: { isAppActive: boolean }) => {
   const t = useTranslations()
   const [showUserInformation, setShowUserInformation] = useState<boolean>(false)
 
   return (
-    <SystemWindow applicationName={t('user.label.apple_account')}>
+    <SystemWindow sectionName={t('user.label.apple_account')} isAppActive={isAppActive}>
       {!showUserInformation && (
         <>
           <div className="flex flex-col items-center justify-center py-5">
@@ -97,14 +102,14 @@ const AppleAccount = () => {
   )
 }
 
-const General = () => {
+const General = ({ isAppActive }: { isAppActive: boolean }) => {
   const t = useTranslations()
 
   const [showAbout, setShowAbout] = useState<boolean>(false)
   const [showSoftwareUpdates, setShowSoftwareUpdates] = useState<boolean>(false)
 
   return (
-    <SystemWindow>
+    <SystemWindow isAppActive={isAppActive}>
       {!showAbout && !showSoftwareUpdates && (
         <>
           <div className="mt-2 rounded border border-alabaster-300 border-opacity-30 bg-alabaster-200 bg-opacity-25 p-2">
@@ -195,10 +200,15 @@ const General = () => {
 const SystemSettings = () => {
   const t = useTranslations()
   const dispatch = useAppDispatch()
-  const openApplications = useAppSelector((state) => state.application.openApplications)
+  const { activeApplication, openApplications } = useAppSelector((state) => state.application)
   const isSystemSettingApplicationOpened = useMemo(
     () => openApplications.includes(EApplication.SYSTEM_SETTINGS),
     [openApplications],
+  )
+
+  const isSystemSettingActived = useMemo(
+    () => activeApplication === EApplication.SYSTEM_SETTINGS,
+    [activeApplication],
   )
 
   const settingsRef = useRef<HTMLDivElement>(null)
@@ -239,16 +249,20 @@ const SystemSettings = () => {
     >
       <div
         ref={settingsRef}
-        className={classNames('flex w-fit select-none shadow-md', {
+        className={classNames('absolute flex w-fit select-none shadow-md', {
           'opacity-0': !isSystemSettingApplicationOpened,
+          'z-10': isSystemSettingActived,
+          'cancel-draggable': !isSystemSettingActived,
         })}
+        onClick={() => dispatch(setActiveApplication(EApplication.SYSTEM_SETTINGS))}
       >
         {/* Sidebar */}
         <div className="rounded-es-xl rounded-ss-xl bg-alabaster-200">
           <div
-            className={classNames('w-56 cursor-move border-b px-2', {
+            className={classNames('w-56 border-b px-2', {
               'border-alabaster-400 border-opacity-55': isScrolling,
               'border-transparent': !isScrolling,
+              'cursor-move': isSystemSettingActived,
             })}
           >
             <WindowUtil
@@ -307,8 +321,12 @@ const SystemSettings = () => {
 
         {/* Content */}
         <div className="rounded-ee-xl rounded-se-xl bg-alabaster-100">
-          {activeItem?.id === ESystemSettingItem.USER && <AppleAccount />}
-          {activeItem?.id === ESystemSettingItem.GENERAL && <General />}
+          {activeItem?.id === ESystemSettingItem.USER && (
+            <AppleAccount isAppActive={isSystemSettingActived} />
+          )}
+          {activeItem?.id === ESystemSettingItem.GENERAL && (
+            <General isAppActive={isSystemSettingActived} />
+          )}
         </div>
       </div>
     </Draggable>

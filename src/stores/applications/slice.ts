@@ -2,11 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IDropdown } from '@/interfaces'
 
 export interface ApplicationState {
+  activeApplication: string
   openApplications: string[]
   applicationUtils: IDropdown[]
 }
 
 const initialState: ApplicationState = {
+  activeApplication: '',
   openApplications: [],
   applicationUtils: [],
 }
@@ -17,6 +19,9 @@ export const counterSlice = createSlice({
   reducers: {
     openApplication: (state: ApplicationState, action: PayloadAction<string>) => {
       state.openApplications.push(action.payload)
+    },
+    setActiveApplication: (state: ApplicationState, action: PayloadAction<string>) => {
+      state.activeApplication = action.payload
     },
     closeApplication: (state: ApplicationState, action: PayloadAction<string>) => {
       state.openApplications = state.openApplications.filter(
@@ -29,6 +34,7 @@ export const counterSlice = createSlice({
   },
 })
 
-export const { openApplication, closeApplication, setApplicationUtils } = counterSlice.actions
+export const { setActiveApplication, openApplication, closeApplication, setApplicationUtils } =
+  counterSlice.actions
 
 export default counterSlice.reducer
