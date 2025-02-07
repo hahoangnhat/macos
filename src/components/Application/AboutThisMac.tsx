@@ -31,7 +31,7 @@ const AboutThisMac = () => {
       <div
         ref={aboutThisMacRef}
         className={classNames(
-          'flex w-fit cursor-move select-none flex-col gap-4 rounded-xl bg-alabaster-200 p-2 shadow-md',
+          'absolute flex w-fit cursor-move select-none flex-col gap-4 rounded-xl bg-alabaster-200 p-2 shadow-md',
           {
             'opacity-0': !isAboutThisMacApplicationOpened,
           },

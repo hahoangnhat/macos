@@ -239,7 +239,7 @@ const SystemSettings = () => {
     >
       <div
         ref={settingsRef}
-        className={classNames('flex w-fit select-none shadow-md', {
+        className={classNames('absolute flex w-fit select-none shadow-md', {
           'opacity-0': !isSystemSettingApplicationOpened,
         })}
       >
