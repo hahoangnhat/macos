@@ -5,7 +5,7 @@ import Draggable from 'react-draggable'
 import { WindowUtil } from '../Util'
 import { useTranslations } from 'next-intl'
 import { MacMiniIcon } from '../Icons'
-import { closeApplication } from '@/stores/applications/slice'
+import { closeApplication, setActiveApplication } from '@/stores/applications/slice'
 import classNames from 'classnames'
 import { useAppDispatch, useAppSelector } from '@/stores/hooks'
 import { EApplication } from '@/constants'
@@ -13,10 +13,15 @@ import { EApplication } from '@/constants'
 const AboutThisMac = () => {
   const t = useTranslations()
   const dispatch = useAppDispatch()
-  const openApplications = useAppSelector((state) => state.application.openApplications)
+  const { activeApplication, openApplications } = useAppSelector((state) => state.application)
   const isAboutThisMacApplicationOpened = useMemo(
     () => openApplications.includes(EApplication.ABOUT_THIS_MAC),
     [openApplications],
+  )
+
+  const isAboutThisMacActived = useMemo(
+    () => activeApplication === EApplication.ABOUT_THIS_MAC,
+    [activeApplication],
   )
 
   const aboutThisMacRef = useRef<HTMLDivElement>(null)
@@ -31,11 +36,14 @@ const AboutThisMac = () => {
       <div
         ref={aboutThisMacRef}
         className={classNames(
-          'absolute flex w-fit cursor-move select-none flex-col gap-4 rounded-xl bg-alabaster-200 p-2 shadow-md',
+          'absolute flex w-fit select-none flex-col gap-4 rounded-xl bg-alabaster-200 p-2 shadow-md',
           {
             'opacity-0': !isAboutThisMacApplicationOpened,
+            'z-10 cursor-move': isAboutThisMacActived,
+            'cancel-draggable': !isAboutThisMacActived,
           },
         )}
+        onClick={() => dispatch(setActiveApplication(EApplication.ABOUT_THIS_MAC))}
       >
         <WindowUtil onClose={() => dispatch(closeApplication(EApplication.ABOUT_THIS_MAC))} />
         <div className="flex flex-col items-center p-4">
