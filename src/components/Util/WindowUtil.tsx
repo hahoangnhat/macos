@@ -12,15 +12,15 @@ const WindowUtil = ({ onClose, onMinimize, onMaximize, className }: IWindowUtil)
   return (
     <div
       className={classNames(
-        'group flex w-fit items-center gap-2 *:flex *:h-3 *:w-3 *:items-center *:justify-center *:rounded-full',
+        'group flex w-fit items-center gap-2 *:flex *:h-3 *:w-3 *:cursor-pointer *:items-center *:justify-center *:rounded-full',
         className,
       )}
     >
-      <div className="bg-red-500" onClick={onClose}>
+      <div className="cancel-draggable bg-red-500" onClick={onClose}>
         <X size={10} className="hidden group-hover:block" />
       </div>
       <div
-        className={classNames('bg-yellow-400', {
+        className={classNames('cancel-draggable bg-yellow-400', {
           'border border-alabaster-400 border-opacity-70 !bg-transparent': !onMinimize,
         })}
         onClick={onMinimize}
@@ -28,7 +28,7 @@ const WindowUtil = ({ onClose, onMinimize, onMaximize, className }: IWindowUtil)
         {onMinimize && <Minus size={10} className={'hidden group-hover:block'} />}
       </div>
       <div
-        className={classNames('bg-green-500', {
+        className={classNames('cancel-draggable bg-green-500', {
           'border border-alabaster-400 border-opacity-70 !bg-transparent': !onMinimize,
         })}
         onClick={onMaximize}
