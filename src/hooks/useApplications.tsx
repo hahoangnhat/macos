@@ -25,7 +25,18 @@ const useApplications = () => {
   }
 
   const closeApp = (appName: EApplication) => {
-    dispatch(setOpenApplications(openApplications.filter((app) => app !== appName)))
+    const remainOpenApplications = openApplications.filter((app) => app !== appName)
+    // Close this app
+    dispatch(setOpenApplications(remainOpenApplications))
+
+    // Activate the adjacent app that is open
+    dispatch(
+      setActiveApplication(
+        remainOpenApplications.length
+          ? remainOpenApplications[remainOpenApplications.length - 1]
+          : EApplication.FINDER,
+      ),
+    )
   }
 
   const forceQuit = () => {

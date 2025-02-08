@@ -40,7 +40,7 @@ const AboutThisMac = () => {
         className={classNames(
           'bg-alabaster-200 absolute flex w-fit flex-col gap-4 rounded-xl p-2 shadow-md select-none',
           {
-            'opacity-0': !isAboutThisMacApplicationOpened,
+            '-z-50 opacity-0': !isAboutThisMacApplicationOpened,
             'z-10 cursor-move': isAboutThisMacActived,
           },
         )}

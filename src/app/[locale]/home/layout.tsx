@@ -1,5 +1,5 @@
 'use client'
-import { Header } from '@/components'
+import { Dock, Header } from '@/components'
 import { useApplications } from '@/hooks'
 import { useAppSelector } from '@/stores/hooks'
 import { useEffect } from 'react'
@@ -17,7 +17,12 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex h-full w-full flex-col">
       <Header utils={applicationUtils} />
-      <main className="h-0 grow">{children}</main>
+      <main className="relative h-0 grow">
+        {children}
+        <div className="absolute bottom-2 flex w-full justify-center">
+          <Dock />
+        </div>
+      </main>
     </div>
   )
 }
