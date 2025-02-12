@@ -10,8 +10,7 @@ import { DropdownButtonItem, FinderIcon } from '@/components'
 import DropdownSubMenu from '@/components/Dropdown/DropdownSubMenu'
 import { IDropdown, IDropdownItem, TTFunction } from '@/interfaces'
 import { v4 as uuidv4 } from 'uuid'
-import { openApplication, setActiveApplication } from '@/stores/applications/slice'
-import { useAppDispatch } from '@/stores/hooks'
+import { useApplications } from '@/hooks'
 
 interface IHeaderProps {
   utils: IDropdown[]
@@ -20,14 +19,13 @@ interface IHeaderProps {
 const Header = ({ utils }: IHeaderProps) => {
   const t = useTranslations()
   const locale = useLocale()
-  const dispatch = useAppDispatch()
+  const { openApp } = useApplications()
 
   const [isMenuActive, setMenuActive] = useState<boolean>(false)
   const [activeItem, setActiveItem] = useState<string>('')
 
   const handleOpenApp = (appName: EApplication) => {
-    dispatch(openApplication(appName))
-    dispatch(setActiveApplication(appName))
+    openApp(appName)
     setMenuActive(false)
     setActiveItem('')
   }
