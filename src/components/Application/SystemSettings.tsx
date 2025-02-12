@@ -5,12 +5,11 @@ import {
   generateSystemSettingItems,
   releaseNotes,
 } from '@/constants'
-import { useAppDispatch, useAppSelector } from '@/stores/hooks'
+import { useAppSelector } from '@/stores/hooks'
 import classNames from 'classnames'
 import { ChangeEvent, ReactNode, useMemo, useRef, useState } from 'react'
 import Draggable from 'react-draggable'
 import { WindowUtil } from '../Util'
-import { closeApplication, setActiveApplication } from '@/stores/applications/slice'
 import { Input } from '../Input'
 import {
   ChevronLeft,
@@ -23,7 +22,8 @@ import {
   Search,
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { ISystemSettingItem } from '@/interfaces/applications'
+import { ISystemSettingItem } from '@/interfaces'
+import { useApplications } from '@/hooks'
 
 interface ISystemWindowProps {
   children: ReactNode
@@ -199,8 +199,9 @@ const General = ({ isAppActive }: { isAppActive: boolean }) => {
 
 const SystemSettings = () => {
   const t = useTranslations()
-  const dispatch = useAppDispatch()
   const { activeApplication, openApplications } = useAppSelector((state) => state.application)
+  const { activeApp, closeApp } = useApplications()
+
   const isSystemSettingApplicationOpened = useMemo(
     () => openApplications.includes(EApplication.SYSTEM_SETTINGS),
     [openApplications],
@@ -246,15 +247,14 @@ const SystemSettings = () => {
       bounds="parent"
       cancel=".cancel-draggable"
       defaultPosition={{ x: 0, y: 0 }}
+      onStart={() => activeApp(EApplication.SYSTEM_SETTINGS)}
     >
       <div
         ref={settingsRef}
         className={classNames('absolute flex w-fit select-none shadow-md', {
           'opacity-0': !isSystemSettingApplicationOpened,
           'z-10': isSystemSettingActived,
-          'cancel-draggable': !isSystemSettingActived,
         })}
-        onClick={() => dispatch(setActiveApplication(EApplication.SYSTEM_SETTINGS))}
       >
         {/* Sidebar */}
         <div className="rounded-es-xl rounded-ss-xl bg-alabaster-200">
@@ -266,7 +266,7 @@ const SystemSettings = () => {
             })}
           >
             <WindowUtil
-              onClose={() => dispatch(closeApplication(EApplication.SYSTEM_SETTINGS))}
+              onClose={() => closeApp(EApplication.SYSTEM_SETTINGS)}
               className="p-2 pb-5 pt-4"
             />
             <Input

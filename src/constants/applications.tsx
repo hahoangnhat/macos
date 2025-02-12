@@ -1,6 +1,5 @@
-import { TTFunction } from '@/interfaces'
+import { TTFunction, ISystemSettingItem } from '@/interfaces'
 import { Cog } from 'lucide-react'
-import { ISystemSettingItem } from '@/interfaces/applications'
 
 const enum EApplication {
   FINDER = 'Finder',

@@ -5,15 +5,16 @@ import Draggable from 'react-draggable'
 import { WindowUtil } from '../Util'
 import { useTranslations } from 'next-intl'
 import { MacMiniIcon } from '../Icons'
-import { closeApplication, setActiveApplication } from '@/stores/applications/slice'
 import classNames from 'classnames'
-import { useAppDispatch, useAppSelector } from '@/stores/hooks'
+import { useAppSelector } from '@/stores/hooks'
 import { EApplication } from '@/constants'
+import { useApplications } from '@/hooks'
 
 const AboutThisMac = () => {
   const t = useTranslations()
-  const dispatch = useAppDispatch()
   const { activeApplication, openApplications } = useAppSelector((state) => state.application)
+  const { activeApp, closeApp } = useApplications()
+
   const isAboutThisMacApplicationOpened = useMemo(
     () => openApplications.includes(EApplication.ABOUT_THIS_MAC),
     [openApplications],
@@ -32,6 +33,7 @@ const AboutThisMac = () => {
       bounds="parent"
       cancel=".cancel-draggable"
       defaultPosition={{ x: 0, y: 0 }}
+      onStart={() => activeApp(EApplication.ABOUT_THIS_MAC)}
     >
       <div
         ref={aboutThisMacRef}
@@ -40,12 +42,10 @@ const AboutThisMac = () => {
           {
             'opacity-0': !isAboutThisMacApplicationOpened,
             'z-10 cursor-move': isAboutThisMacActived,
-            'cancel-draggable': !isAboutThisMacActived,
           },
         )}
-        onClick={() => dispatch(setActiveApplication(EApplication.ABOUT_THIS_MAC))}
       >
-        <WindowUtil onClose={() => dispatch(closeApplication(EApplication.ABOUT_THIS_MAC))} />
+        <WindowUtil onClose={() => closeApp(EApplication.ABOUT_THIS_MAC)} />
         <div className="flex flex-col items-center p-4">
           <MacMiniIcon className="h-12 w-12" />
           <div className="mt-2 text-xl font-bold">{t('about_this_mac.label.mac_mini')}</div>
