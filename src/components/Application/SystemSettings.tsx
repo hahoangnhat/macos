@@ -39,12 +39,12 @@ const SystemWindow = ({ children, sectionName, isAppActive }: ISystemWindowProps
           'cursor-move': isAppActive,
         })}
       >
-        <div className="flex items-center gap-4 text-alabaster-500 *:h-6 *:w-6">
+        <div className="text-alabaster-500 flex items-center gap-4 *:h-6 *:w-6">
           <ChevronLeft />
           <ChevronRight />
         </div>
         {sectionName && (
-          <div className="text-sm font-semibold text-alabaster-900">{sectionName}</div>
+          <div className="text-alabaster-900 text-sm font-semibold">{sectionName}</div>
         )}
       </div>
 
@@ -68,33 +68,33 @@ const AppleAccount = ({ isAppActive }: { isAppActive: boolean }) => {
           </div>
 
           <div
-            className="flex cursor-pointer items-center justify-between rounded border border-alabaster-300 border-opacity-30 bg-alabaster-200 bg-opacity-25 p-2"
+            className="border-alabaster-300/30 bg-alabaster-200/25 flex cursor-pointer items-center justify-between rounded-sm border p-2"
             onClick={() => setShowUserInformation(true)}
           >
             <div className="flex items-center gap-2">
               <IdCard />
               <div className="text-sm">{t('user.label.personal_information')}</div>
             </div>
-            <ChevronRight className="h-4 w-4 text-alabaster-400" />
+            <ChevronRight className="text-alabaster-400 h-4 w-4" />
           </div>
         </>
       )}
 
       {showUserInformation && (
-        <div className="mt-4 flex flex-col gap-2 rounded border border-alabaster-300 border-opacity-30 bg-alabaster-200 bg-opacity-25 p-2">
+        <div className="border-alabaster-300/30 bg-alabaster-200/25 mt-4 flex flex-col gap-2 rounded-sm border p-2">
           <div className="flex cursor-pointer items-center justify-between text-xs">
             <div>{t('user.label.name')}</div>
-            <div className="flex items-center gap-2 text-alabaster-400">
+            <div className="text-alabaster-400 flex items-center gap-2">
               <div>{t('user.label.full_name')}</div>
-              <ChevronRight className="h-4 w-4 text-alabaster-400" />
+              <ChevronRight className="text-alabaster-400 h-4 w-4" />
             </div>
           </div>
 
-          <div className="h-px w-full bg-alabaster-300 bg-opacity-30"></div>
+          <div className="bg-alabaster-300/30 h-px w-full"></div>
 
           <div className="flex cursor-pointer items-center justify-between text-xs">
             <div>{t('user.label.date_of_birth')}</div>
-            <div className="mr-2 text-alabaster-400">{t('user.label.birth_date')}</div>
+            <div className="text-alabaster-400 mr-2">{t('user.label.birth_date')}</div>
           </div>
         </div>
       )}
@@ -112,16 +112,16 @@ const General = ({ isAppActive }: { isAppActive: boolean }) => {
     <SystemWindow isAppActive={isAppActive}>
       {!showAbout && !showSoftwareUpdates && (
         <>
-          <div className="mt-2 rounded border border-alabaster-300 border-opacity-30 bg-alabaster-200 bg-opacity-25 p-2">
+          <div className="border-alabaster-300/30 bg-alabaster-200/25 mt-2 rounded-sm border p-2">
             <div className="text-center text-xl font-bold">
               {t('system_settings.label.general')}
             </div>
-            <div className="text-center text-xs text-alabaster-400">
+            <div className="text-alabaster-400 text-center text-xs">
               {t('system_settings.note.general')}
             </div>
           </div>
 
-          <div className="mt-2 flex cursor-pointer flex-col gap-2 rounded border border-alabaster-300 border-opacity-30 bg-alabaster-200 bg-opacity-25 p-2">
+          <div className="border-alabaster-300/30 bg-alabaster-200/25 mt-2 flex cursor-pointer flex-col gap-2 rounded-sm border p-2">
             <div className="flex items-center justify-between" onClick={() => setShowAbout(true)}>
               <div className="flex items-center gap-2">
                 <HardDrive size={20} />
@@ -130,7 +130,7 @@ const General = ({ isAppActive }: { isAppActive: boolean }) => {
               <ChevronRight size={16} className="text-alabaster-400" />
             </div>
 
-            <div className="border-t border-alabaster-300 border-opacity-30"></div>
+            <div className="border-alabaster-300/30 border-t"></div>
 
             <div
               className="flex items-center justify-between"
@@ -149,18 +149,18 @@ const General = ({ isAppActive }: { isAppActive: boolean }) => {
       {showAbout && (
         <div>
           <div className="text-center text-xl font-bold">{t('system_settings.label.about')}</div>
-          <div className="text-center text-xs text-alabaster-400">
+          <div className="text-alabaster-400 text-center text-xs">
             {t('system_settings.note.about')}
           </div>
           <div className="mt-4">
             <div className="text-sm font-semibold">{t('system_settings.label.version')}</div>
-            <div className="mt-1 text-xs text-alabaster-400">
+            <div className="text-alabaster-400 mt-1 text-xs">
               {t('system_settings.note.version')}
             </div>
             <div className="mt-2 text-sm font-semibold">
               {t('system_settings.label.description')}
             </div>
-            <div className="mt-1 text-xs text-alabaster-400">
+            <div className="text-alabaster-400 mt-1 text-xs">
               {t('system_settings.note.description')}
             </div>
           </div>
@@ -176,9 +176,9 @@ const General = ({ isAppActive }: { isAppActive: boolean }) => {
                   version: note.version,
                 })}
               </div>
-              <div className="text-sm text-alabaster-500">{note.description}</div>
+              <div className="text-alabaster-500 text-sm">{note.description}</div>
               <div className="my-2 font-medium">{t('system_settings.label.whats_new')}</div>
-              <ul className="flex flex-col gap-1 text-sm text-alabaster-500">
+              <ul className="text-alabaster-500 flex flex-col gap-1 text-sm">
                 {note.news.map((item) => (
                   <li key={item.id}>
                     {t.rich('system_settings.label.new_item', {
@@ -251,23 +251,23 @@ const SystemSettings = () => {
     >
       <div
         ref={settingsRef}
-        className={classNames('absolute flex w-fit select-none shadow-md', {
+        className={classNames('absolute flex w-fit shadow-md select-none', {
           'opacity-0': !isSystemSettingApplicationOpened,
           'z-10': isSystemSettingActived,
         })}
       >
         {/* Sidebar */}
-        <div className="rounded-es-xl rounded-ss-xl bg-alabaster-200">
+        <div className="bg-alabaster-200 rounded-ss-xl rounded-es-xl">
           <div
             className={classNames('w-56 border-b px-2', {
-              'border-alabaster-400 border-opacity-55': isScrolling,
+              'border-alabaster-400/55': isScrolling,
               'border-transparent': !isScrolling,
               'cursor-move': isSystemSettingActived,
             })}
           >
             <WindowUtil
               onClose={() => closeApp(EApplication.SYSTEM_SETTINGS)}
-              className="p-2 pb-5 pt-4"
+              className="p-2 pt-4 pb-5"
             />
             <Input
               showStartIcon={<Search className="h-4 w-4" />}
@@ -284,7 +284,7 @@ const SystemSettings = () => {
             />
           </div>
           <div
-            className="cancel-draggable h-[500px] w-full overflow-y-auto px-2 pb-2 pr-3 pt-5"
+            className="cancel-draggable h-[500px] w-full overflow-y-auto px-2 pt-5 pr-3 pb-2"
             onScroll={handleScroll}
           >
             <div
@@ -306,7 +306,7 @@ const SystemSettings = () => {
                 className={classNames(
                   'flex cursor-pointer items-center gap-2 rounded-md p-1',
                   {
-                    'bg-blue-500 bg-opacity-90 text-white': activeItem?.id === item.id,
+                    'bg-blue-500/90 text-white': activeItem?.id === item.id,
                   },
                   item.className,
                 )}
@@ -320,7 +320,7 @@ const SystemSettings = () => {
         </div>
 
         {/* Content */}
-        <div className="rounded-ee-xl rounded-se-xl bg-alabaster-100">
+        <div className="bg-alabaster-100 rounded-se-xl rounded-ee-xl">
           {activeItem?.id === ESystemSettingItem.USER && (
             <AppleAccount isAppActive={isSystemSettingActived} />
           )}

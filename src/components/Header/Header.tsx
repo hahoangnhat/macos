@@ -116,7 +116,7 @@ const Header = ({ utils }: IHeaderProps) => {
   ]
 
   return (
-    <header className="relative flex justify-between bg-alabaster-50 bg-opacity-20 px-1 text-sm text-white">
+    <header className="bg-alabaster-50/20 relative flex justify-between px-1 text-sm text-white">
       <div className="z-50 flex items-center text-xs">
         <Dropdown
           id="macos-1.0.0"
@@ -154,7 +154,7 @@ const Header = ({ utils }: IHeaderProps) => {
 
       {isMenuActive && (
         <div
-          className="absolute left-0 top-0 z-40 h-screen w-screen bg-transparent"
+          className="absolute top-0 left-0 z-40 h-screen w-screen bg-transparent"
           onClick={() => {
             setMenuActive(false)
             setActiveItem('')
