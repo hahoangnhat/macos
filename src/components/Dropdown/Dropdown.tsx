@@ -26,10 +26,10 @@ const Dropdown = ({
   className,
 }: IDropdownProps) => {
   const buttonClassname = classNames(
-    'h-full cursor-pointer rounded px-3 py-1 select-none',
+    'h-full cursor-pointer rounded-sm px-3 py-1 select-none',
     {
-      'hover:bg-alabaster-100 hover:bg-opacity-30': isMenuActive,
-      'bg-alabaster-100 bg-opacity-30': isMenuActive && activeItem === id,
+      'hover:bg-alabaster-100/30': isMenuActive,
+      'bg-alabaster-100/30': isMenuActive && activeItem === id,
     },
     className,
   )

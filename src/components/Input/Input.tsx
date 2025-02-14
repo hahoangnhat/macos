@@ -10,18 +10,18 @@ const Input = ({ showStartIcon, showEndIcon, className, ...props }: IInputProps)
   return (
     <div className="cancel-draggable relative flex w-full">
       {showStartIcon && (
-        <div className="absolute left-0 top-0 translate-x-1/3 translate-y-1/3">{showStartIcon}</div>
+        <div className="absolute top-0 left-0 translate-x-1/3 translate-y-1/3">{showStartIcon}</div>
       )}
       <input
         className={classNames(
-          'w-full rounded-md border border-alabaster-300 bg-alabaster-300 bg-opacity-50 p-1 text-xs focus-visible:border-alabaster-400 focus-visible:outline-none',
+          'border-alabaster-300 bg-alabaster-300/50 focus-visible:border-alabaster-400 w-full rounded-md border p-1 text-xs focus-visible:outline-hidden',
           { 'pl-6': showStartIcon, 'pr-6': showEndIcon },
           className,
         )}
         {...props}
       />
       {showEndIcon && (
-        <div className="absolute right-0 top-0 -translate-x-1/3 translate-y-1/3">{showEndIcon}</div>
+        <div className="absolute top-0 right-0 -translate-x-1/3 translate-y-1/3">{showEndIcon}</div>
       )}
     </div>
   )

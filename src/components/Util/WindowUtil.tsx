@@ -24,7 +24,7 @@ const WindowUtil = ({ onClose, onMinimize, onMaximize, className }: IWindowUtil)
       {/* Minimize */}
       <div
         className={classNames('cancel-draggable bg-yellow-400', {
-          'border border-alabaster-400 border-opacity-70 !bg-transparent': !onMinimize,
+          'border-alabaster-400/70 border bg-transparent!': !onMinimize,
         })}
         onClick={onMinimize}
       >
@@ -34,7 +34,7 @@ const WindowUtil = ({ onClose, onMinimize, onMaximize, className }: IWindowUtil)
       {/* Maximize */}
       <div
         className={classNames('cancel-draggable bg-green-500', {
-          'border border-alabaster-400 border-opacity-70 !bg-transparent': !onMinimize,
+          'border-alabaster-400/70 border bg-transparent!': !onMinimize,
         })}
         onClick={onMaximize}
       >

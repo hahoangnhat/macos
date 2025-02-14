@@ -38,7 +38,7 @@ const AboutThisMac = () => {
       <div
         ref={aboutThisMacRef}
         className={classNames(
-          'absolute flex w-fit select-none flex-col gap-4 rounded-xl bg-alabaster-200 p-2 shadow-md',
+          'bg-alabaster-200 absolute flex w-fit flex-col gap-4 rounded-xl p-2 shadow-md select-none',
           {
             'opacity-0': !isAboutThisMacApplicationOpened,
             'z-10 cursor-move': isAboutThisMacActived,
@@ -49,7 +49,7 @@ const AboutThisMac = () => {
         <div className="flex flex-col items-center p-4">
           <MacMiniIcon className="h-12 w-12" />
           <div className="mt-2 text-xl font-bold">{t('about_this_mac.label.mac_mini')}</div>
-          <div className="text-[10px] text-alabaster-500">{t('about_this_mac.label.m1_2020')}</div>
+          <div className="text-alabaster-500 text-[10px]">{t('about_this_mac.label.m1_2020')}</div>
           <div className="my-4 grid grid-cols-2 gap-x-2 text-[10px]">
             <div className="text-end">{t('about_this_mac.label.chip')}</div>
             <div>{t('about_this_mac.label.apple_m1')}</div>
@@ -58,13 +58,13 @@ const AboutThisMac = () => {
             <div className="text-end">{t('about_this_mac.label.mac_os')}</div>
             <div>{t('about_this_mac.label.sequoia_15_1_1')}</div>
           </div>
-          <div className="cancel-draggable mb-4 cursor-pointer rounded-md bg-alabaster-400 bg-opacity-70 px-2 py-1 text-xs hover:bg-alabaster-200">
+          <div className="cancel-draggable bg-alabaster-400/70 hover:bg-alabaster-200 mb-4 cursor-pointer rounded-md px-2 py-1 text-xs">
             {t('about_this_mac.button.more_info')}
           </div>
-          <div className="cancel-draggable cursor-pointer text-[10px] text-alabaster-500 underline hover:opacity-60">
+          <div className="cancel-draggable text-alabaster-500 cursor-pointer text-[10px] underline hover:opacity-60">
             {t('about_this_mac.label.regulatory_certification')}
           </div>
-          <div className="text-[10px] text-alabaster-500">
+          <div className="text-alabaster-500 text-[10px]">
             {t('about_this_mac.label.all_rights_reserved')}
           </div>
         </div>
