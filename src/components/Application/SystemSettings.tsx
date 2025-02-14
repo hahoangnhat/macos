@@ -24,14 +24,24 @@ import {
 import { useTranslations } from 'next-intl'
 import { ISystemSettingItem } from '@/interfaces'
 import { useApplications } from '@/hooks'
+import usePathNavigation from '@/hooks/usePathNavigation'
+import { PATH } from '@/constants'
 
 interface ISystemWindowProps {
   children: ReactNode
   sectionName?: string
   isAppActive?: boolean
+  back?: () => void
+  forward?: () => void
 }
 
-const SystemWindow = ({ children, sectionName, isAppActive }: ISystemWindowProps) => {
+const SystemWindow = ({
+  children,
+  sectionName,
+  isAppActive,
+  back,
+  forward,
+}: ISystemWindowProps) => {
   return (
     <div className="flex h-full w-112 flex-col">
       <div
@@ -40,8 +50,14 @@ const SystemWindow = ({ children, sectionName, isAppActive }: ISystemWindowProps
         })}
       >
         <div className="text-alabaster-500 flex items-center gap-4 *:h-6 *:w-6">
-          <ChevronLeft />
-          <ChevronRight />
+          <ChevronLeft
+            onClick={back}
+            className={classNames({ 'cursor-pointer': back, 'opacity-60': !back })}
+          />
+          <ChevronRight
+            onClick={forward}
+            className={classNames({ 'cursor-pointer': forward, 'opacity-60': !forward })}
+          />
         </div>
         {sectionName && (
           <div className="text-alabaster-900 text-sm font-semibold">{sectionName}</div>
@@ -55,11 +71,17 @@ const SystemWindow = ({ children, sectionName, isAppActive }: ISystemWindowProps
 
 const AppleAccount = ({ isAppActive }: { isAppActive: boolean }) => {
   const t = useTranslations()
-  const [showUserInformation, setShowUserInformation] = useState<boolean>(false)
+
+  const { currentPath, navigate, back, forward, canGoBack, canGoForward } = usePathNavigation()
 
   return (
-    <SystemWindow sectionName={t('user.label.apple_account')} isAppActive={isAppActive}>
-      {!showUserInformation && (
+    <SystemWindow
+      sectionName={t('user.label.apple_account')}
+      isAppActive={isAppActive}
+      back={canGoBack ? back : undefined}
+      forward={canGoForward ? forward : undefined}
+    >
+      {!currentPath && (
         <>
           <div className="flex flex-col items-center justify-center py-5">
             <CircleUserRound className="h-20 w-20" />
@@ -69,7 +91,7 @@ const AppleAccount = ({ isAppActive }: { isAppActive: boolean }) => {
 
           <div
             className="border-alabaster-300/30 bg-alabaster-200/25 flex cursor-pointer items-center justify-between rounded-sm border p-2"
-            onClick={() => setShowUserInformation(true)}
+            onClick={() => navigate(PATH.APPLE_ACCOUNT)}
           >
             <div className="flex items-center gap-2">
               <IdCard />
@@ -80,7 +102,7 @@ const AppleAccount = ({ isAppActive }: { isAppActive: boolean }) => {
         </>
       )}
 
-      {showUserInformation && (
+      {currentPath === PATH.APPLE_ACCOUNT && (
         <div className="border-alabaster-300/30 bg-alabaster-200/25 mt-4 flex flex-col gap-2 rounded-sm border p-2">
           <div className="flex cursor-pointer items-center justify-between text-xs">
             <div>{t('user.label.name')}</div>
