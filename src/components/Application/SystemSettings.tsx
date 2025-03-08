@@ -72,7 +72,9 @@ const SystemWindow = ({
 const AppleAccount = ({ isAppActive }: { isAppActive: boolean }) => {
   const t = useTranslations()
 
-  const { currentPath, navigate, back, forward, canGoBack, canGoForward } = usePathNavigation()
+  const { currentPath, navigate, back, forward, canGoBack, canGoForward } = usePathNavigation({
+    historyInit: PATH.APPLE_ACCOUNT,
+  })
 
   return (
     <SystemWindow
@@ -81,7 +83,7 @@ const AppleAccount = ({ isAppActive }: { isAppActive: boolean }) => {
       back={canGoBack ? back : undefined}
       forward={canGoForward ? forward : undefined}
     >
-      {!currentPath && (
+      {currentPath === PATH.APPLE_ACCOUNT && (
         <>
           <div className="flex flex-col items-center justify-center py-5">
             <CircleUserRound className="h-20 w-20" />
@@ -91,7 +93,7 @@ const AppleAccount = ({ isAppActive }: { isAppActive: boolean }) => {
 
           <div
             className="border-alabaster-300/30 bg-alabaster-200/25 flex cursor-pointer items-center justify-between rounded-sm border p-2"
-            onClick={() => navigate(PATH.APPLE_ACCOUNT)}
+            onClick={() => navigate(PATH.APPLE_ACCOUNT_USER)}
           >
             <div className="flex items-center gap-2">
               <IdCard />
@@ -102,7 +104,7 @@ const AppleAccount = ({ isAppActive }: { isAppActive: boolean }) => {
         </>
       )}
 
-      {currentPath === PATH.APPLE_ACCOUNT && (
+      {currentPath === PATH.APPLE_ACCOUNT_USER && (
         <div className="border-alabaster-300/30 bg-alabaster-200/25 mt-4 flex flex-col gap-2 rounded-sm border p-2">
           <div className="flex cursor-pointer items-center justify-between text-xs">
             <div>{t('user.label.name')}</div>
