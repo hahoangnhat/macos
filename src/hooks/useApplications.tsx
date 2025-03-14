@@ -1,56 +1,44 @@
-import { EApplication } from '@/constants'
-import {
-  setActiveApplication,
-  setApplicationUtils,
-  setOpenApplications,
-} from '@/stores/applications/slice'
-import { useAppDispatch, useAppSelector } from '@/stores/hooks'
+import { EApplication, EApplicationActionType } from '@/constants'
+import { handleApplicationState, setApplicationUtils } from '@/stores/applications/slice'
+import { useAppDispatch } from '@/stores/hooks'
 import { useTranslations } from 'next-intl'
-import { useMemo } from 'react'
+import { useMemo, useCallback } from 'react'
 import { generateFinderUtils } from '@/utils'
 
 const useApplications = () => {
   const t = useTranslations()
   const dispatch = useAppDispatch()
-  const { openApplications } = useAppSelector((state) => state.application)
 
   const finderUtils = useMemo(() => generateFinderUtils(t), [t])
 
-  const activeApp = (appName: EApplication) => {
-    dispatch(setActiveApplication(appName))
-  }
+  const handleAppAction = useCallback(
+    (type: EApplicationActionType, appName?: EApplication) => {
+      dispatch(handleApplicationState({ type, appName }))
+    },
+    [dispatch],
+  )
 
-  const openApp = (appName: EApplication) => {
-    dispatch(setOpenApplications([...openApplications, appName]))
-    activeApp(appName)
-  }
+  // Bring app to front
+  const activateApp = (appName: EApplication) =>
+    handleAppAction(EApplicationActionType.ACTIVATE, appName)
 
-  const closeApp = (appName: EApplication) => {
-    const remainOpenApplications = openApplications.filter((app) => app !== appName)
-    // Close this app
-    dispatch(setOpenApplications(remainOpenApplications))
+  // Open app window
+  const launchApp = (appName: EApplication) => handleAppAction(EApplicationActionType.OPEN, appName)
 
-    // Activate the adjacent app that is open
-    dispatch(
-      setActiveApplication(
-        remainOpenApplications.length
-          ? remainOpenApplications[remainOpenApplications.length - 1]
-          : EApplication.FINDER,
-      ),
-    )
-  }
+  // Close app window
+  const closeApp = (appName: EApplication) => handleAppAction(EApplicationActionType.CLOSE, appName)
 
-  const forceQuit = () => {
-    dispatch(setActiveApplication(''))
-    dispatch(setOpenApplications([EApplication.FINDER]))
+  // Force quit all apps
+  const forceQuitAll = useCallback(() => {
+    dispatch(handleApplicationState({ type: EApplicationActionType.RESET }))
     dispatch(setApplicationUtils(finderUtils))
-  }
+  }, [dispatch, finderUtils])
 
   return {
-    activeApp,
-    openApp,
+    activateApp,
+    launchApp,
     closeApp,
-    forceQuit,
+    forceQuitAll,
   }
 }
 

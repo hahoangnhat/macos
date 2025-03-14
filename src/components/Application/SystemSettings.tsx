@@ -220,14 +220,14 @@ const General = ({ isAppActive }: { isAppActive: boolean }) => {
 const SystemSettings = () => {
   const t = useTranslations()
   const { activeApplication, openApplications } = useAppSelector((state) => state.application)
-  const { activeApp, closeApp } = useApplications()
+  const { activateApp, closeApp } = useApplications()
 
-  const isSystemSettingApplicationOpened = useMemo(
+  const isOpened = useMemo(
     () => openApplications.includes(EApplication.SYSTEM_SETTINGS),
     [openApplications],
   )
 
-  const isSystemSettingActived = useMemo(
+  const isActived = useMemo(
     () => activeApplication === EApplication.SYSTEM_SETTINGS,
     [activeApplication],
   )
@@ -267,13 +267,13 @@ const SystemSettings = () => {
       bounds="parent"
       cancel=".cancel-draggable"
       defaultPosition={{ x: 0, y: 0 }}
-      onStart={() => activeApp(EApplication.SYSTEM_SETTINGS)}
+      onStart={() => activateApp(EApplication.SYSTEM_SETTINGS)}
     >
       <div
         ref={settingsRef}
         className={classNames('absolute flex w-fit shadow-md select-none', {
-          '-z-50 opacity-0': !isSystemSettingApplicationOpened,
-          'z-10': isSystemSettingActived,
+          '-z-50 opacity-0': !isOpened,
+          'z-10': isActived,
         })}
       >
         {/* Sidebar */}
@@ -282,7 +282,7 @@ const SystemSettings = () => {
             className={classNames('w-56 border-b px-2', {
               'border-alabaster-400/55': isScrolling,
               'border-transparent': !isScrolling,
-              'cursor-move': isSystemSettingActived,
+              'cursor-move': isActived,
             })}
           >
             <WindowUtil
@@ -341,12 +341,8 @@ const SystemSettings = () => {
 
         {/* Content */}
         <div className="bg-alabaster-100 rounded-se-xl rounded-ee-xl">
-          {activeItem?.id === ESystemSettingItem.USER && (
-            <AppleAccount isAppActive={isSystemSettingActived} />
-          )}
-          {activeItem?.id === ESystemSettingItem.GENERAL && (
-            <General isAppActive={isSystemSettingActived} />
-          )}
+          {activeItem?.id === ESystemSettingItem.USER && <AppleAccount isAppActive={isActived} />}
+          {activeItem?.id === ESystemSettingItem.GENERAL && <General isAppActive={isActived} />}
         </div>
       </div>
     </Draggable>

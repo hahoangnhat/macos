@@ -6,11 +6,11 @@ import { useEffect } from 'react'
 
 const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   const applicationUtils = useAppSelector((state) => state.application.applicationUtils)
-  const { forceQuit } = useApplications()
+  const { forceQuitAll } = useApplications()
 
   useEffect(() => {
     // Force quit all applications for the first visit
-    forceQuit()
+    forceQuitAll()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

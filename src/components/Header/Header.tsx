@@ -4,11 +4,11 @@ import { AppleIcon, BatteryIcon, SearchIcon, SwitchIcon, WifiIcon } from '../Ico
 import { useLocale, useTranslations } from 'next-intl'
 import { EApplication, ELocale } from '@/constants'
 import { Dropdown } from '../Dropdown'
-import { useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import classNames from 'classnames'
 import { DropdownButtonItem, FinderIcon } from '@/components'
 import DropdownSubMenu from '@/components/Dropdown/DropdownSubMenu'
-import { IDropdown, IDropdownItem, TTFunction } from '@/interfaces'
+import { IDropdown, IDropdownItem } from '@/interfaces'
 import { v4 as uuidv4 } from 'uuid'
 import { useApplications } from '@/hooks'
 
@@ -19,101 +19,110 @@ interface IHeaderProps {
 const Header = ({ utils }: IHeaderProps) => {
   const t = useTranslations()
   const locale = useLocale()
-  const { openApp } = useApplications()
+  const { launchApp } = useApplications()
 
   const [isMenuActive, setMenuActive] = useState<boolean>(false)
   const [activeItem, setActiveItem] = useState<string>('')
 
-  const handleOpenApp = (appName: EApplication) => {
-    openApp(appName)
-    setMenuActive(false)
-    setActiveItem('')
-  }
+  const handleOpenApp = useCallback(
+    (appName: EApplication) => {
+      launchApp(appName)
+      setMenuActive(false)
+      setActiveItem('')
+    },
+    [launchApp],
+  )
 
-  const macosItems = (t: TTFunction): IDropdownItem[] => [
-    {
-      id: uuidv4(),
-      item: (
-        <DropdownButtonItem
-          label={t('macos.dropdown.about')}
-          hasDivider
-          onClick={() => handleOpenApp(EApplication.ABOUT_THIS_MAC)}
-        />
-      ),
-    },
-    {
-      id: uuidv4(),
-      item: (
-        <DropdownButtonItem
-          label={t('macos.dropdown.system_settings')}
-          onClick={() => handleOpenApp(EApplication.SYSTEM_SETTINGS)}
-        />
-      ),
-    },
-    {
-      id: uuidv4(),
-      item: <DropdownButtonItem label={t('macos.dropdown.app_store')} hasDivider />,
-    },
-    {
-      id: uuidv4(),
-      item: (
-        <DropdownSubMenu
-          label={t('macos.dropdown.recent_items')}
-          menuItems={[
-            {
-              id: uuidv4(),
-              item: (
-                <DropdownButtonItem
-                  label={
-                    <div className="flex items-center gap-1">
-                      <FinderIcon style={{ width: '14px', height: '14px' }} />
-                      {t('finder.header.app_name')}
-                    </div>
-                  }
-                  groupTitle={t('finder.header.dropdown.applications')}
-                  hasDivider
-                />
-              ),
-            },
-            {
-              id: uuidv4(),
-              item: <DropdownButtonItem label={t('finder.header.dropdown.clear_menu')} />,
-            },
-          ]}
-          hasDivider
-        />
-      ),
-    },
-    {
-      id: uuidv4(),
-      item: <DropdownButtonItem label={t('macos.dropdown.force_quit')} shortcut="⌥⌘⎋" hasDivider />,
-    },
-    {
-      id: uuidv4(),
-      item: <DropdownButtonItem label={t('macos.dropdown.sleep')} />,
-    },
-    {
-      id: uuidv4(),
-      item: <DropdownButtonItem label={t('macos.dropdown.restart')} />,
-    },
-    {
-      id: uuidv4(),
-      item: <DropdownButtonItem label={t('macos.dropdown.shutdown')} hasDivider />,
-    },
-    {
-      id: uuidv4(),
-      item: <DropdownButtonItem label={t('macos.dropdown.lock_screen')} shortcut="⌃⌘Q" />,
-    },
-    {
-      id: uuidv4(),
-      item: (
-        <DropdownButtonItem
-          label={t('macos.dropdown.log_out', { full_name: 'Hà Hoàng Nhật' })}
-          shortcut="⇧⌘Q"
-        />
-      ),
-    },
-  ]
+  const macosItems: IDropdownItem[] = useMemo(
+    () => [
+      {
+        id: uuidv4(),
+        item: (
+          <DropdownButtonItem
+            label={t('macos.dropdown.about')}
+            hasDivider
+            onClick={() => handleOpenApp(EApplication.ABOUT_THIS_MAC)}
+          />
+        ),
+      },
+      {
+        id: uuidv4(),
+        item: (
+          <DropdownButtonItem
+            label={t('macos.dropdown.system_settings')}
+            onClick={() => handleOpenApp(EApplication.SYSTEM_SETTINGS)}
+          />
+        ),
+      },
+      {
+        id: uuidv4(),
+        item: <DropdownButtonItem label={t('macos.dropdown.app_store')} hasDivider />,
+      },
+      {
+        id: uuidv4(),
+        item: (
+          <DropdownSubMenu
+            label={t('macos.dropdown.recent_items')}
+            menuItems={[
+              {
+                id: uuidv4(),
+                item: (
+                  <DropdownButtonItem
+                    label={
+                      <div className="flex items-center gap-1">
+                        <FinderIcon style={{ width: '14px', height: '14px' }} />
+                        {t('finder.header.app_name')}
+                      </div>
+                    }
+                    groupTitle={t('finder.header.dropdown.applications')}
+                    hasDivider
+                  />
+                ),
+              },
+              {
+                id: uuidv4(),
+                item: <DropdownButtonItem label={t('finder.header.dropdown.clear_menu')} />,
+              },
+            ]}
+            hasDivider
+          />
+        ),
+      },
+      {
+        id: uuidv4(),
+        item: (
+          <DropdownButtonItem label={t('macos.dropdown.force_quit')} shortcut="⌥⌘⎋" hasDivider />
+        ),
+      },
+      {
+        id: uuidv4(),
+        item: <DropdownButtonItem label={t('macos.dropdown.sleep')} />,
+      },
+      {
+        id: uuidv4(),
+        item: <DropdownButtonItem label={t('macos.dropdown.restart')} />,
+      },
+      {
+        id: uuidv4(),
+        item: <DropdownButtonItem label={t('macos.dropdown.shutdown')} hasDivider />,
+      },
+      {
+        id: uuidv4(),
+        item: <DropdownButtonItem label={t('macos.dropdown.lock_screen')} shortcut="⌃⌘Q" />,
+      },
+      {
+        id: uuidv4(),
+        item: (
+          <DropdownButtonItem
+            label={t('macos.dropdown.log_out', { full_name: 'Hà Hoàng Nhật' })}
+            shortcut="⇧⌘Q"
+          />
+        ),
+      },
+    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [t],
+  )
 
   return (
     <header className="bg-alabaster-50/20 relative flex justify-between px-1 text-sm text-white">
@@ -121,7 +130,7 @@ const Header = ({ utils }: IHeaderProps) => {
         <Dropdown
           id="macos-1.0.0"
           label={<AppleIcon className="h-4 w-4" />}
-          items={macosItems(t)}
+          items={macosItems}
           isMenuActive={isMenuActive}
           setMenuActive={setMenuActive}
           activeItem={activeItem}
