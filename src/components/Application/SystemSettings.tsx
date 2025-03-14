@@ -1,10 +1,5 @@
 'use client'
-import {
-  EApplication,
-  ESystemSettingItem,
-  generateSystemSettingItems,
-  releaseNotes,
-} from '@/constants'
+import { EApplication, ESystemSettingItem, releaseNotes } from '@/constants'
 import { useAppSelector } from '@/stores/hooks'
 import classNames from 'classnames'
 import { ChangeEvent, ReactNode, useMemo, useRef, useState } from 'react'
@@ -24,14 +19,25 @@ import {
 import { useTranslations } from 'next-intl'
 import { ISystemSettingItem } from '@/interfaces'
 import { useApplications } from '@/hooks'
+import usePathNavigation from '@/hooks/usePathNavigation'
+import { PATH } from '@/constants'
+import { generateSystemSettingItems } from '@/utils'
 
 interface ISystemWindowProps {
   children: ReactNode
   sectionName?: string
   isAppActive?: boolean
+  back?: () => void
+  forward?: () => void
 }
 
-const SystemWindow = ({ children, sectionName, isAppActive }: ISystemWindowProps) => {
+const SystemWindow = ({
+  children,
+  sectionName,
+  isAppActive,
+  back,
+  forward,
+}: ISystemWindowProps) => {
   return (
     <div className="flex h-full w-112 flex-col">
       <div
@@ -40,8 +46,14 @@ const SystemWindow = ({ children, sectionName, isAppActive }: ISystemWindowProps
         })}
       >
         <div className="text-alabaster-500 flex items-center gap-4 *:h-6 *:w-6">
-          <ChevronLeft />
-          <ChevronRight />
+          <ChevronLeft
+            onClick={back}
+            className={classNames({ 'cursor-pointer': back, 'opacity-60': !back })}
+          />
+          <ChevronRight
+            onClick={forward}
+            className={classNames({ 'cursor-pointer': forward, 'opacity-60': !forward })}
+          />
         </div>
         {sectionName && (
           <div className="text-alabaster-900 text-sm font-semibold">{sectionName}</div>
@@ -55,11 +67,19 @@ const SystemWindow = ({ children, sectionName, isAppActive }: ISystemWindowProps
 
 const AppleAccount = ({ isAppActive }: { isAppActive: boolean }) => {
   const t = useTranslations()
-  const [showUserInformation, setShowUserInformation] = useState<boolean>(false)
+
+  const { currentPath, navigate, back, forward, canGoBack, canGoForward } = usePathNavigation({
+    historyInit: PATH.APPLE_ACCOUNT,
+  })
 
   return (
-    <SystemWindow sectionName={t('user.label.apple_account')} isAppActive={isAppActive}>
-      {!showUserInformation && (
+    <SystemWindow
+      sectionName={t('user.label.apple_account')}
+      isAppActive={isAppActive}
+      back={canGoBack ? back : undefined}
+      forward={canGoForward ? forward : undefined}
+    >
+      {currentPath === PATH.APPLE_ACCOUNT && (
         <>
           <div className="flex flex-col items-center justify-center py-5">
             <CircleUserRound className="h-20 w-20" />
@@ -69,7 +89,7 @@ const AppleAccount = ({ isAppActive }: { isAppActive: boolean }) => {
 
           <div
             className="border-alabaster-300/30 bg-alabaster-200/25 flex cursor-pointer items-center justify-between rounded-sm border p-2"
-            onClick={() => setShowUserInformation(true)}
+            onClick={() => navigate(PATH.APPLE_ACCOUNT_USER)}
           >
             <div className="flex items-center gap-2">
               <IdCard />
@@ -80,7 +100,7 @@ const AppleAccount = ({ isAppActive }: { isAppActive: boolean }) => {
         </>
       )}
 
-      {showUserInformation && (
+      {currentPath === PATH.APPLE_ACCOUNT_USER && (
         <div className="border-alabaster-300/30 bg-alabaster-200/25 mt-4 flex flex-col gap-2 rounded-sm border p-2">
           <div className="flex cursor-pointer items-center justify-between text-xs">
             <div>{t('user.label.name')}</div>
@@ -200,14 +220,14 @@ const General = ({ isAppActive }: { isAppActive: boolean }) => {
 const SystemSettings = () => {
   const t = useTranslations()
   const { activeApplication, openApplications } = useAppSelector((state) => state.application)
-  const { activeApp, closeApp } = useApplications()
+  const { activateApp, closeApp } = useApplications()
 
-  const isSystemSettingApplicationOpened = useMemo(
+  const isOpened = useMemo(
     () => openApplications.includes(EApplication.SYSTEM_SETTINGS),
     [openApplications],
   )
 
-  const isSystemSettingActived = useMemo(
+  const isActived = useMemo(
     () => activeApplication === EApplication.SYSTEM_SETTINGS,
     [activeApplication],
   )
@@ -247,13 +267,13 @@ const SystemSettings = () => {
       bounds="parent"
       cancel=".cancel-draggable"
       defaultPosition={{ x: 0, y: 0 }}
-      onStart={() => activeApp(EApplication.SYSTEM_SETTINGS)}
+      onStart={() => activateApp(EApplication.SYSTEM_SETTINGS)}
     >
       <div
         ref={settingsRef}
         className={classNames('absolute flex w-fit shadow-md select-none', {
-          'opacity-0': !isSystemSettingApplicationOpened,
-          'z-10': isSystemSettingActived,
+          '-z-50 opacity-0': !isOpened,
+          'z-10': isActived,
         })}
       >
         {/* Sidebar */}
@@ -262,7 +282,7 @@ const SystemSettings = () => {
             className={classNames('w-56 border-b px-2', {
               'border-alabaster-400/55': isScrolling,
               'border-transparent': !isScrolling,
-              'cursor-move': isSystemSettingActived,
+              'cursor-move': isActived,
             })}
           >
             <WindowUtil
@@ -321,12 +341,8 @@ const SystemSettings = () => {
 
         {/* Content */}
         <div className="bg-alabaster-100 rounded-se-xl rounded-ee-xl">
-          {activeItem?.id === ESystemSettingItem.USER && (
-            <AppleAccount isAppActive={isSystemSettingActived} />
-          )}
-          {activeItem?.id === ESystemSettingItem.GENERAL && (
-            <General isAppActive={isSystemSettingActived} />
-          )}
+          {activeItem?.id === ESystemSettingItem.USER && <AppleAccount isAppActive={isActived} />}
+          {activeItem?.id === ESystemSettingItem.GENERAL && <General isAppActive={isActived} />}
         </div>
       </div>
     </Draggable>

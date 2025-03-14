@@ -13,14 +13,14 @@ import { useApplications } from '@/hooks'
 const AboutThisMac = () => {
   const t = useTranslations()
   const { activeApplication, openApplications } = useAppSelector((state) => state.application)
-  const { activeApp, closeApp } = useApplications()
+  const { activateApp, closeApp } = useApplications()
 
-  const isAboutThisMacApplicationOpened = useMemo(
+  const isOpened = useMemo(
     () => openApplications.includes(EApplication.ABOUT_THIS_MAC),
     [openApplications],
   )
 
-  const isAboutThisMacActived = useMemo(
+  const isActived = useMemo(
     () => activeApplication === EApplication.ABOUT_THIS_MAC,
     [activeApplication],
   )
@@ -33,15 +33,15 @@ const AboutThisMac = () => {
       bounds="parent"
       cancel=".cancel-draggable"
       defaultPosition={{ x: 0, y: 0 }}
-      onStart={() => activeApp(EApplication.ABOUT_THIS_MAC)}
+      onStart={() => activateApp(EApplication.ABOUT_THIS_MAC)}
     >
       <div
         ref={aboutThisMacRef}
         className={classNames(
           'bg-alabaster-200 absolute flex w-fit flex-col gap-4 rounded-xl p-2 shadow-md select-none',
           {
-            'opacity-0': !isAboutThisMacApplicationOpened,
-            'z-10 cursor-move': isAboutThisMacActived,
+            '-z-50 opacity-0': !isOpened,
+            'z-10 cursor-move': isActived,
           },
         )}
       >

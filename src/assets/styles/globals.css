@@ -65,7 +65,6 @@
   html,
   body {
     @apply h-full w-full;
-    background: url('../images/desktop-background.jpg') center center;
     font-family: 'SF Pro';
   }
 
