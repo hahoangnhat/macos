@@ -1,4 +1,4 @@
-import { EApplication, generateFinderUtils } from '@/constants'
+import { EApplication } from '@/constants'
 import {
   setActiveApplication,
   setApplicationUtils,
@@ -7,6 +7,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/stores/hooks'
 import { useTranslations } from 'next-intl'
 import { useMemo } from 'react'
+import { generateFinderUtils } from '@/utils'
 
 const useApplications = () => {
   const t = useTranslations()

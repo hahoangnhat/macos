@@ -1,10 +1,5 @@
 'use client'
-import {
-  EApplication,
-  ESystemSettingItem,
-  generateSystemSettingItems,
-  releaseNotes,
-} from '@/constants'
+import { EApplication, ESystemSettingItem, releaseNotes } from '@/constants'
 import { useAppSelector } from '@/stores/hooks'
 import classNames from 'classnames'
 import { ChangeEvent, ReactNode, useMemo, useRef, useState } from 'react'
@@ -26,6 +21,7 @@ import { ISystemSettingItem } from '@/interfaces'
 import { useApplications } from '@/hooks'
 import usePathNavigation from '@/hooks/usePathNavigation'
 import { PATH } from '@/constants'
+import { generateSystemSettingItems } from '@/utils'
 
 interface ISystemWindowProps {
   children: ReactNode
