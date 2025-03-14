@@ -15,8 +15,7 @@ const LocaleLayout = async ({ children }: { children: React.ReactNode }) => {
         <Image
           src={desktopBackground}
           alt="Desktop background"
-          className="absolute top-0 left-0 h-full w-full"
-          style={{ objectFit: 'cover' }}
+          className="absolute top-0 left-0 h-full w-full object-cover"
         />
         <StoreProvider>
           <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
