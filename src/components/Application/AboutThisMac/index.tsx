@@ -1,14 +1,13 @@
 'use client'
 
-import { useMemo, useRef } from 'react'
+import { memo, useMemo, useRef } from 'react'
 import Draggable from 'react-draggable'
-import { WindowUtil } from '../Util'
 import { useTranslations } from 'next-intl'
-import { MacMiniIcon } from '../Icons'
 import classNames from 'classnames'
 import { useAppSelector } from '@/stores/hooks'
 import { EApplication } from '@/constants'
 import { useApplications } from '@/hooks'
+import { MacMiniIcon, WindowUtil } from '@/components'
 
 const AboutThisMac = () => {
   const t = useTranslations()
@@ -73,4 +72,4 @@ const AboutThisMac = () => {
   )
 }
 
-export default AboutThisMac
+export default memo(AboutThisMac)
