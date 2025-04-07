@@ -19,6 +19,8 @@ const Header = () => {
   const [isMenuActive, setMenuActive] = useState<boolean>(false)
   const [activeItem, setActiveItem] = useState<string>('')
 
+  const currentDateTime = useMemo(() => getCurrentDateTime(locale as ELocale), [locale])
+
   const resetMenu = () => {
     setMenuActive(false)
     setActiveItem('')
@@ -35,14 +37,15 @@ const Header = () => {
   const handleActiveMenu = (active: boolean) => setMenuActive(active)
   const handleActiveMenuItem = (id: string) => setActiveItem(id)
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const macosItems: IDropdownItem[] = useMemo(() => generateMacOsUtils(t, handleOpenApp), [t])
+  const macosItems: IDropdownItem[] = useMemo(
+    () => generateMacOsUtils(t, handleOpenApp),
+    [handleOpenApp, t],
+  )
 
   useEffect(() => {
     // Force quit all applications for the first visit
     forceQuitAll()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [forceQuitAll])
 
   return (
     <header className="bg-alabaster-50/20 relative flex justify-between px-1 text-sm text-white">
@@ -78,7 +81,7 @@ const Header = () => {
         <WifiIcon className="h-4 w-4" />
         <SearchIcon className="h-5 w-5" />
         <SwitchIcon className="h-5 w-5" />
-        <span>{getCurrentDateTime(locale as ELocale)}</span>
+        <span>{currentDateTime}</span>
       </div>
 
       {isMenuActive && (

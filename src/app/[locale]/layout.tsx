@@ -16,6 +16,7 @@ const LocaleLayout = async ({ children }: { children: React.ReactNode }) => {
           src={desktopBackground}
           alt="Desktop background"
           className="absolute top-0 left-0 h-full w-full object-cover"
+          priority
         />
         <StoreProvider>
           <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
