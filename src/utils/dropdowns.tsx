@@ -1,5 +1,6 @@
-import { DropdownButtonItem } from '@/components'
-import { IDropdown, TTFunction } from '@/interfaces'
+import { DropdownButtonItem, DropdownSubMenu, FinderIcon } from '@/components'
+import { EApplication } from '@/constants'
+import { IDropdown, IDropdownItem, TTFunction } from '@/interfaces'
 import {
   Clock9,
   Globe,
@@ -720,4 +721,92 @@ const generateFinderUtils = (t: TTFunction): IDropdown[] => [
   },
 ]
 
-export { generateFinderUtils }
+const generateMacOsUtils = (
+  t: TTFunction,
+  handleOpenApp: (appName: EApplication) => void,
+): IDropdownItem[] => [
+  {
+    id: uuidv4(),
+    item: (
+      <DropdownButtonItem
+        label={t('macos.dropdown.about')}
+        hasDivider
+        onClick={() => handleOpenApp(EApplication.ABOUT_THIS_MAC)}
+      />
+    ),
+  },
+  {
+    id: uuidv4(),
+    item: (
+      <DropdownButtonItem
+        label={t('macos.dropdown.system_settings')}
+        onClick={() => handleOpenApp(EApplication.SYSTEM_SETTINGS)}
+      />
+    ),
+  },
+  {
+    id: uuidv4(),
+    item: <DropdownButtonItem label={t('macos.dropdown.app_store')} hasDivider />,
+  },
+  {
+    id: uuidv4(),
+    item: (
+      <DropdownSubMenu
+        label={t('macos.dropdown.recent_items')}
+        menuItems={[
+          {
+            id: uuidv4(),
+            item: (
+              <DropdownButtonItem
+                label={
+                  <div className="flex items-center gap-1">
+                    <FinderIcon style={{ width: '14px', height: '14px' }} />
+                    {t('finder.header.app_name')}
+                  </div>
+                }
+                groupTitle={t('finder.header.dropdown.applications')}
+                hasDivider
+              />
+            ),
+          },
+          {
+            id: uuidv4(),
+            item: <DropdownButtonItem label={t('finder.header.dropdown.clear_menu')} />,
+          },
+        ]}
+        hasDivider
+      />
+    ),
+  },
+  {
+    id: uuidv4(),
+    item: <DropdownButtonItem label={t('macos.dropdown.force_quit')} shortcut="⌥⌘⎋" hasDivider />,
+  },
+  {
+    id: uuidv4(),
+    item: <DropdownButtonItem label={t('macos.dropdown.sleep')} />,
+  },
+  {
+    id: uuidv4(),
+    item: <DropdownButtonItem label={t('macos.dropdown.restart')} />,
+  },
+  {
+    id: uuidv4(),
+    item: <DropdownButtonItem label={t('macos.dropdown.shutdown')} hasDivider />,
+  },
+  {
+    id: uuidv4(),
+    item: <DropdownButtonItem label={t('macos.dropdown.lock_screen')} shortcut="⌃⌘Q" />,
+  },
+  {
+    id: uuidv4(),
+    item: (
+      <DropdownButtonItem
+        label={t('macos.dropdown.log_out', { full_name: 'Hà Hoàng Nhật' })}
+        shortcut="⇧⌘Q"
+      />
+    ),
+  },
+]
+
+export { generateFinderUtils, generateMacOsUtils }

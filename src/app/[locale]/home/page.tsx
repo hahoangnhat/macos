@@ -1,5 +1,3 @@
-'use client'
-
 import { AboutThisMac, SystemSettings } from '@/components'
 
 const Home = () => {

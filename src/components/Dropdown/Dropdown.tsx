@@ -2,16 +2,16 @@
 
 import { IDropdownItem } from '@/interfaces'
 import classNames from 'classnames'
-import { Dispatch, Fragment, ReactNode, SetStateAction } from 'react'
+import { Fragment, ReactNode } from 'react'
 
 interface IDropdownProps {
   id: string
   label: ReactNode
   items: IDropdownItem[]
   isMenuActive: boolean
-  setMenuActive: Dispatch<SetStateAction<boolean>>
+  handleActiveMenu: (active: boolean) => void
   activeItem: string
-  setActiveItem: Dispatch<SetStateAction<string>>
+  handleActiveMenuItem: (id: string) => void
   className?: string
 }
 
@@ -20,9 +20,9 @@ const Dropdown = ({
   label,
   items,
   isMenuActive,
-  setMenuActive,
+  handleActiveMenu,
   activeItem,
-  setActiveItem,
+  handleActiveMenuItem,
   className,
 }: IDropdownProps) => {
   const buttonClassname = classNames(
@@ -43,11 +43,11 @@ const Dropdown = ({
     e.stopPropagation()
 
     if (activeItem === id) {
-      setMenuActive(false)
-      setActiveItem('')
+      handleActiveMenu(false)
+      handleActiveMenuItem('')
     } else {
-      setMenuActive(true)
-      setActiveItem(id)
+      handleActiveMenu(true)
+      handleActiveMenuItem(id)
     }
   }
 
@@ -57,7 +57,7 @@ const Dropdown = ({
       <div
         className={buttonClassname}
         onClick={handleToggle}
-        {...(isMenuActive && { onMouseOver: () => setActiveItem(id) })}
+        {...(isMenuActive && { onMouseOver: () => handleActiveMenuItem(id) })}
       >
         {label}
       </div>
