@@ -1,133 +1,63 @@
 'use client'
-import { getCurrentDateTime } from '@/utils'
+import { generateMacOsUtils, getCurrentDateTime } from '@/utils'
 import { AppleIcon, BatteryIcon, SearchIcon, SwitchIcon, WifiIcon } from '../Icons'
 import { useLocale, useTranslations } from 'next-intl'
 import { EApplication, ELocale } from '@/constants'
 import { Dropdown } from '../Dropdown'
-import { useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import classNames from 'classnames'
-import { DropdownButtonItem, FinderIcon } from '@/components'
-import DropdownSubMenu from '@/components/Dropdown/DropdownSubMenu'
-import { IDropdown, IDropdownItem, TTFunction } from '@/interfaces'
-import { v4 as uuidv4 } from 'uuid'
-import { openApplication, setActiveApplication } from '@/stores/applications/slice'
-import { useAppDispatch } from '@/stores/hooks'
+import { IDropdown, IDropdownItem } from '@/interfaces'
+import { useApplications } from '@/hooks'
+import { useAppSelector } from '@/stores/hooks'
 
-interface IHeaderProps {
-  utils: IDropdown[]
-}
-
-const Header = ({ utils }: IHeaderProps) => {
+const Header = () => {
   const t = useTranslations()
   const locale = useLocale()
-  const dispatch = useAppDispatch()
+  const utils = useAppSelector((state) => state.application.applicationUtils)
+  const { launchApp, forceQuitAll } = useApplications()
 
   const [isMenuActive, setMenuActive] = useState<boolean>(false)
   const [activeItem, setActiveItem] = useState<string>('')
 
-  const handleOpenApp = (appName: EApplication) => {
-    dispatch(openApplication(appName))
-    dispatch(setActiveApplication(appName))
+  const currentDateTime = useMemo(() => getCurrentDateTime(locale as ELocale), [locale])
+
+  const resetMenu = () => {
     setMenuActive(false)
     setActiveItem('')
   }
 
-  const macosItems = (t: TTFunction): IDropdownItem[] => [
-    {
-      id: uuidv4(),
-      item: (
-        <DropdownButtonItem
-          label={t('macos.dropdown.about')}
-          hasDivider
-          onClick={() => handleOpenApp(EApplication.ABOUT_THIS_MAC)}
-        />
-      ),
+  const handleOpenApp = useCallback(
+    (appName: EApplication) => {
+      launchApp(appName)
+      resetMenu()
     },
-    {
-      id: uuidv4(),
-      item: (
-        <DropdownButtonItem
-          label={t('macos.dropdown.system_settings')}
-          onClick={() => handleOpenApp(EApplication.SYSTEM_SETTINGS)}
-        />
-      ),
-    },
-    {
-      id: uuidv4(),
-      item: <DropdownButtonItem label={t('macos.dropdown.app_store')} hasDivider />,
-    },
-    {
-      id: uuidv4(),
-      item: (
-        <DropdownSubMenu
-          label={t('macos.dropdown.recent_items')}
-          menuItems={[
-            {
-              id: uuidv4(),
-              item: (
-                <DropdownButtonItem
-                  label={
-                    <div className="flex items-center gap-1">
-                      <FinderIcon style={{ width: '14px', height: '14px' }} />
-                      {t('finder.header.app_name')}
-                    </div>
-                  }
-                  groupTitle={t('finder.header.dropdown.applications')}
-                  hasDivider
-                />
-              ),
-            },
-            {
-              id: uuidv4(),
-              item: <DropdownButtonItem label={t('finder.header.dropdown.clear_menu')} />,
-            },
-          ]}
-          hasDivider
-        />
-      ),
-    },
-    {
-      id: uuidv4(),
-      item: <DropdownButtonItem label={t('macos.dropdown.force_quit')} shortcut="⌥⌘⎋" hasDivider />,
-    },
-    {
-      id: uuidv4(),
-      item: <DropdownButtonItem label={t('macos.dropdown.sleep')} />,
-    },
-    {
-      id: uuidv4(),
-      item: <DropdownButtonItem label={t('macos.dropdown.restart')} />,
-    },
-    {
-      id: uuidv4(),
-      item: <DropdownButtonItem label={t('macos.dropdown.shutdown')} hasDivider />,
-    },
-    {
-      id: uuidv4(),
-      item: <DropdownButtonItem label={t('macos.dropdown.lock_screen')} shortcut="⌃⌘Q" />,
-    },
-    {
-      id: uuidv4(),
-      item: (
-        <DropdownButtonItem
-          label={t('macos.dropdown.log_out', { full_name: 'Hà Hoàng Nhật' })}
-          shortcut="⇧⌘Q"
-        />
-      ),
-    },
-  ]
+    [launchApp],
+  )
+
+  const handleActiveMenu = (active: boolean) => setMenuActive(active)
+  const handleActiveMenuItem = (id: string) => setActiveItem(id)
+
+  const macosItems: IDropdownItem[] = useMemo(
+    () => generateMacOsUtils(t, handleOpenApp),
+    [handleOpenApp, t],
+  )
+
+  useEffect(() => {
+    // Force quit all applications for the first visit
+    forceQuitAll()
+  }, [forceQuitAll])
 
   return (
-    <header className="relative flex justify-between bg-alabaster-50 bg-opacity-20 px-1 text-sm text-white">
+    <header className="bg-alabaster-50/20 relative flex justify-between px-1 text-sm text-white">
       <div className="z-50 flex items-center text-xs">
         <Dropdown
           id="macos-1.0.0"
           label={<AppleIcon className="h-4 w-4" />}
-          items={macosItems(t)}
+          items={macosItems}
           isMenuActive={isMenuActive}
-          setMenuActive={setMenuActive}
+          handleActiveMenu={handleActiveMenu}
           activeItem={activeItem}
-          setActiveItem={setActiveItem}
+          handleActiveMenuItem={handleActiveMenuItem}
         />
 
         {/* Application utils */}
@@ -138,9 +68,9 @@ const Header = ({ utils }: IHeaderProps) => {
             label={util.label}
             items={util.items}
             isMenuActive={isMenuActive}
-            setMenuActive={setMenuActive}
+            handleActiveMenu={handleActiveMenu}
             activeItem={activeItem}
-            setActiveItem={setActiveItem}
+            handleActiveMenuItem={handleActiveMenuItem}
             className={classNames({ 'font-bold': index === 0 })}
           />
         ))}
@@ -151,16 +81,13 @@ const Header = ({ utils }: IHeaderProps) => {
         <WifiIcon className="h-4 w-4" />
         <SearchIcon className="h-5 w-5" />
         <SwitchIcon className="h-5 w-5" />
-        <span>{getCurrentDateTime(locale as ELocale)}</span>
+        <span>{currentDateTime}</span>
       </div>
 
       {isMenuActive && (
         <div
-          className="absolute left-0 top-0 z-40 h-screen w-screen bg-transparent"
-          onClick={() => {
-            setMenuActive(false)
-            setActiveItem('')
-          }}
+          className="absolute top-0 left-0 z-40 h-screen w-screen bg-transparent"
+          onClick={resetMenu}
         ></div>
       )}
     </header>

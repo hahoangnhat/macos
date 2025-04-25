@@ -1,40 +1,69 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IDropdown } from '@/interfaces'
+import { EApplication, EApplicationActionType } from '@/constants'
 
-export interface ApplicationState {
-  activeApplication: string
-  openApplications: string[]
+interface ApplicationState {
+  activeApplication: EApplication
+  openApplications: EApplication[]
   applicationUtils: IDropdown[]
 }
 
 const initialState: ApplicationState = {
-  activeApplication: '',
-  openApplications: [],
+  activeApplication: EApplication.FINDER,
+  openApplications: [EApplication.FINDER],
   applicationUtils: [],
 }
 
-export const counterSlice = createSlice({
+const applicationSlice = createSlice({
   name: 'application',
   initialState,
   reducers: {
-    openApplication: (state: ApplicationState, action: PayloadAction<string>) => {
-      state.openApplications.push(action.payload)
+    setApplicationUtils: (state, action: PayloadAction<IDropdown[]>) => {
+      if (state.applicationUtils !== action.payload) {
+        state.applicationUtils = action.payload
+      }
     },
-    setActiveApplication: (state: ApplicationState, action: PayloadAction<string>) => {
-      state.activeApplication = action.payload
-    },
-    closeApplication: (state: ApplicationState, action: PayloadAction<string>) => {
-      state.openApplications = state.openApplications.filter(
-        (application: string) => application !== action.payload,
-      )
-    },
-    setApplicationUtils: (state: ApplicationState, action: PayloadAction<IDropdown[]>) => {
-      state.applicationUtils = action.payload
+    handleApplicationState: (
+      state,
+      action: PayloadAction<{ type: EApplicationActionType; appName?: EApplication }>,
+    ) => {
+      const { type, appName } = action.payload
+
+      switch (type) {
+        case EApplicationActionType.OPEN:
+          if (appName && !state.openApplications.includes(appName)) {
+            state.openApplications = [...state.openApplications, appName]
+          }
+          state.activeApplication = appName || state.activeApplication
+          break
+
+        case EApplicationActionType.ACTIVATE:
+          if (appName && state.openApplications.includes(appName)) {
+            state.activeApplication = appName
+          }
+          break
+
+        case EApplicationActionType.CLOSE:
+          if (appName) {
+            state.openApplications = state.openApplications.filter((app) => app !== appName)
+            state.activeApplication =
+              state.openApplications.length > 0
+                ? state.openApplications[state.openApplications.length - 1]
+                : EApplication.FINDER
+          }
+          break
+
+        case EApplicationActionType.RESET:
+          state.activeApplication = EApplication.FINDER
+          state.openApplications = [EApplication.FINDER]
+          break
+
+        default:
+          break
+      }
     },
   },
 })
 
-export const { setActiveApplication, openApplication, closeApplication, setApplicationUtils } =
-  counterSlice.actions
-
-export default counterSlice.reducer
+export const { setApplicationUtils, handleApplicationState } = applicationSlice.actions
+export default applicationSlice.reducer

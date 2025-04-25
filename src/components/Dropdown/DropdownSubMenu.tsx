@@ -22,7 +22,7 @@ const DropdownSubMenu = ({
     <>
       <div
         className={classNames(
-          'group/menu relative flex w-full items-center justify-between gap-2 px-2 py-1 hover:rounded-md hover:bg-steel-blue-600',
+          'group/menu hover:bg-steel-blue-600 relative flex w-full items-center justify-between gap-2 px-2 py-1 hover:rounded-md',
           className,
         )}
       >
@@ -32,13 +32,13 @@ const DropdownSubMenu = ({
         <div
           className={classNames(
             dropdownClassname,
-            'absolute !-top-[2px] right-0 hidden translate-x-full group-hover/menu:block',
+            'absolute -top-[2px]! right-0 hidden translate-x-full group-hover/menu:block',
           )}
         >
           {menuItems?.map((item: IDropdownItem) => <div key={item.id}>{item.item}</div>)}
         </div>
       </div>
-      {hasDivider && <div className="mx-2 my-1 h-px bg-alabaster-400 bg-opacity-55"></div>}
+      {hasDivider && <div className="bg-alabaster-400/55 mx-2 my-1 h-px"></div>}
     </>
   )
 }

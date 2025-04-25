@@ -1,11 +1,15 @@
-import { TTFunction } from '@/interfaces'
-import { Cog } from 'lucide-react'
-import { ISystemSettingItem } from '@/interfaces/applications'
-
 const enum EApplication {
+  NONE = '',
   FINDER = 'Finder',
   ABOUT_THIS_MAC = 'About This Mac',
   SYSTEM_SETTINGS = 'System Settings',
+}
+
+const enum EApplicationActionType {
+  OPEN = 'open',
+  CLOSE = 'close',
+  ACTIVATE = 'activate',
+  RESET = 'reset',
 }
 
 const ESystemSettingItem = {
@@ -13,13 +17,4 @@ const ESystemSettingItem = {
   GENERAL: 'general',
 }
 
-const generateSystemSettingItems = (t: TTFunction): ISystemSettingItem[] => [
-  {
-    id: ESystemSettingItem.GENERAL,
-    icon: <Cog className="h-4 w-4" />,
-    name: t('system_settings.label.general'),
-    className: 'mt-2',
-  },
-]
-
-export { EApplication, ESystemSettingItem, generateSystemSettingItems }
+export { EApplication, ESystemSettingItem, EApplicationActionType }

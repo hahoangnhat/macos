@@ -16,20 +16,25 @@ const WindowUtil = ({ onClose, onMinimize, onMaximize, className }: IWindowUtil)
         className,
       )}
     >
+      {/* Close */}
       <div className="cancel-draggable bg-red-500" onClick={onClose}>
         <X size={10} className="hidden group-hover:block" />
       </div>
+
+      {/* Minimize */}
       <div
         className={classNames('cancel-draggable bg-yellow-400', {
-          'border border-alabaster-400 border-opacity-70 !bg-transparent': !onMinimize,
+          'border-alabaster-400/70 border bg-transparent!': !onMinimize,
         })}
         onClick={onMinimize}
       >
         {onMinimize && <Minus size={10} className={'hidden group-hover:block'} />}
       </div>
+
+      {/* Maximize */}
       <div
         className={classNames('cancel-draggable bg-green-500', {
-          'border border-alabaster-400 border-opacity-70 !bg-transparent': !onMinimize,
+          'border-alabaster-400/70 border bg-transparent!': !onMinimize,
         })}
         onClick={onMaximize}
       >

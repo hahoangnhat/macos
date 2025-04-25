@@ -1,25 +1,70 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-@font-face {
-  font-family: 'SF Pro';
-  src: url('../fonts/SF-Pro-Display-Regular.otf') format('opentype');
-  font-weight: 400;
+@theme {
+  --color-alabaster-50: #fafafa;
+  --color-alabaster-100: #efefef;
+  --color-alabaster-200: #dcdcdc;
+  --color-alabaster-300: #bdbdbd;
+  --color-alabaster-400: #989898;
+  --color-alabaster-500: #7c7c7c;
+  --color-alabaster-600: #656565;
+  --color-alabaster-700: #525252;
+  --color-alabaster-800: #464646;
+  --color-alabaster-900: #3d3d3d;
+  --color-alabaster-950: #292929;
+
+  --color-steel-blue-50: #f2f7fc;
+  --color-steel-blue-100: #e2ecf7;
+  --color-steel-blue-200: #cbdff2;
+  --color-steel-blue-300: #a7cae9;
+  --color-steel-blue-400: #7daedd;
+  --color-steel-blue-500: #5e92d3;
+  --color-steel-blue-600: #517ec8;
+  --color-steel-blue-700: #4067b5;
+  --color-steel-blue-800: #395494;
+  --color-steel-blue-900: #324876;
+  --color-steel-blue-950: #222e49;
+
+  --width-112: 28rem;
 }
 
-@font-face {
-  font-family: 'SF Pro';
-  src: url('../fonts/SF-Pro-Display-Regular-Italic.otf') format('opentype');
-  font-weight: 400;
-  font-style: italic;
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@layer utilities {
+  @font-face {
+    font-family: 'SF Pro';
+    src: url('../fonts/SF-Pro-Display-Regular.otf') format('opentype');
+    font-weight: 400;
+  }
+
+  @font-face {
+    font-family: 'SF Pro';
+    src: url('../fonts/SF-Pro-Display-Regular-Italic.otf') format('opentype');
+    font-weight: 400;
+    font-style: italic;
+  }
 }
 
 @layer base {
   html,
   body {
     @apply h-full w-full;
-    background: url('../images/desktop-background.jpg') center center;
     font-family: 'SF Pro';
   }
 
@@ -34,6 +79,6 @@
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    @apply rounded-lg bg-alabaster-400;
+    @apply bg-alabaster-400 rounded-lg;
   }
 }
